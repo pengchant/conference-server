@@ -2,6 +2,7 @@ package com.justcs.controller;
 
 import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.config.Configure;
+import com.deepoove.poi.data.PictureRenderData;
 import com.deepoove.poi.data.RowRenderData;
 import com.deepoove.poi.data.TextRenderData;
 import com.deepoove.poi.data.style.Style;
@@ -113,6 +114,11 @@ public class RecordConfController {
             resource.put("semester", result.getBasicConfInfoView().getSemestername());
             resource.put("weeksno", result.getConfCollectBasicInfoView().getMeetweeks());
             resource.put("leadername", result.getConfCollectBasicInfoView().getCollegeleader());
+            String parentpath = ResourceUtils.getURL("classpath:").getPath();
+            resource.put("myimg", new PictureRenderData(
+                    100,
+                    120,
+                    parentpath + "template/bg.png"));
             String timestr = result.getConfCollectBasicInfoView().getColltime();
             resource.put("cfdatetime", sdf2.format(sdf.parse(timestr)));
             // 上次会议
@@ -165,7 +171,7 @@ public class RecordConfController {
             // 这里渲染模板来发送给客户端下载
             Configure config = Configure.newBuilder().customPolicy("detail_table", new DetailTablePolicy()).build();
 
-            String filePath = ResourceUtils.getURL("classpath:").getPath() + "template/template.docx" ;
+            String filePath = ResourceUtils.getURL("classpath:").getPath() + "template/template.docx";
             logger.info("---->打包文件地址:" + filePath + ".");
 
             XWPFTemplate template = XWPFTemplate.compile(
@@ -441,6 +447,7 @@ public class RecordConfController {
 
     /**
      * 分页查询我需要审核的会议记录
+     *
      * @param param
      * @return
      */
@@ -454,8 +461,6 @@ public class RecordConfController {
             throw e;
         }
     }
-
-
 
 
     /**
@@ -537,11 +542,11 @@ public class RecordConfController {
 
             // 开始
             String starttime = basicConfInfoView.getStarttime();
-            resource.put("starttime", starttime);
+            resource.put("starttime", starttime.substring(0, 16));
 
             // 结束
             String endtime = basicConfInfoView.getEndtime();
-            resource.put("endtime", endtime);
+            resource.put("endtime", endtime.substring(0, 16));
 
             // 会议属性
             List<ConfAttributesListView> attrs = result.getConfattrs();
@@ -567,18 +572,24 @@ public class RecordConfController {
             // 会议记录
             List<ConfRecVoicDetailView> confRecVoicDetailViews = result.getConfRecVoicDetailViewList();
             strbuild.delete(0, strbuild.length());
-            for(ConfRecVoicDetailView element: confRecVoicDetailViews) {
-                strbuild.append("【"+ element.getTitlename()+"】");
-                strbuild.append("," + element.getSpeakername());
-                strbuild.append(":");
+            for (ConfRecVoicDetailView element : confRecVoicDetailViews) {
+                strbuild.append("(" + element.getTitlename() + ") ");
+                strbuild.append("\t" + element.getSpeakername());
+                strbuild.append(": ");
                 strbuild.append(element.getSpeaking());
-                strbuild.append("/r/n");
+                strbuild.append("\n\r");
             }
             resource.put("confrecords", strbuild.toString());
 
             // 会议结论
-            String conclusion =result.getBasicConfInfoView().getConclusion();
-            resource.put("conclusions", FileUtil.Html2Text(conclusion));
+            List<ConfTitle> conclusions = result.getConfTitleViewList();
+            strbuild.delete(0, strbuild.length());
+            for(ConfTitle e: conclusions) {
+                strbuild.append(e.getConftitlecnt() + ":\n\r");
+                strbuild.append(e.getConclusion());
+                strbuild.append("\n\r");
+            }
+            resource.put("conclusions", FileUtil.Html2Text(strbuild.toString()));
 
             // 这里渲染模板来发送给客户端下载
             XWPFTemplate template = XWPFTemplate.compile(
@@ -599,7 +610,97 @@ public class RecordConfController {
 
 
     /**
+     * 直接开会会议下载
+     *
+     * @param request
+     * @param response
+     * @param confid
+     * @throws IOException
+     */
+    @RequestMapping(value = "/{confid}/exportDirconfrecord", method = {RequestMethod.GET, RequestMethod.POST})
+    public void downloadDirectConfRecordFile(HttpServletRequest request, HttpServletResponse response,
+                                             @PathVariable(value = "confid", required = true) String confid) throws IOException {
+        // 先获取数据
+        DirectConfDetailView result = recordConfInfoService.queryDirectConfRecord(confid);
+        if (result != null) {
+            Map<String, Object> resource = new HashMap<>();
+            // 会议名称
+            String confname = result.getConfname();
+            resource.put("confname", confname);
+
+            // 获取学期名称
+            String semestername = result.getSemester();
+            resource.put("semester", semestername);
+
+            // 会议级别
+            String conflevel = result.getConftype();
+            resource.put("conflevel", conflevel);
+
+            // 主持人
+            String holder = result.getHoster();
+            resource.put("holder", holder);
+
+            // 录入人
+            String recorder = result.getRecorder();
+            resource.put("recorder", recorder);
+
+            // 会议地点
+            String address = result.getConfaddress();
+            resource.put("address", address);
+
+            // 开始
+            String starttime = result.getStarttime();
+            resource.put("starttime", starttime.substring(0, 16));
+
+            // 结束
+            String endtime = result.getEndtime();
+            resource.put("endtime", endtime.substring(0, 16));
+
+            // 会议属性
+            String[] attrs = result.getConfattrsArray();
+            StringBuilder strbuild = new StringBuilder("");
+            for (String e : attrs) {
+                strbuild.append(" " + e);
+            }
+            String confattrs = strbuild.toString();
+            resource.put("confattrs", confattrs);
+
+            // 参会人员
+            strbuild.delete(0, strbuild.length());
+            String[] listAttendersViews = result.getAttendersArray();
+            for (String e : listAttendersViews) {
+                strbuild.append(" " + e);
+            }
+            String attenders = strbuild.toString();
+            resource.put("attenders", attenders);
+
+            // 会议记录
+            String maincontent = result.getConftext();
+            resource.put("confrecords", maincontent);
+
+            // 会议结论
+            String conclusion = result.getConclusion();
+            resource.put("conclusions", conclusion);
+
+            // 这里渲染模板来发送给客户端下载
+            XWPFTemplate template = XWPFTemplate.compile(
+                    this.getClass().getResource("/template/material-template.docx"
+                    ).getPath()).render(resource);
+            response.setContentType("application/force-download");
+            response.setHeader("Content-Disposition", "attachment;filename=\""
+                    + URLEncoder.encode(result.getConfname() + ".docx", "UTF-8") + "\"");
+            OutputStream outputStream = response.getOutputStream();
+            template.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
+            template.close();
+        }
+    }
+
+
+    /**
      * 更新会议议题结论
+     *
      * @param conclusionView
      * @return
      */
@@ -609,11 +710,12 @@ public class RecordConfController {
         confTitle.setId(Integer.valueOf(conclusionView.getConftitleid()));
         confTitle.setConclusion(conclusionView.getConclusion());
         int flag = recordConfInfoService.updateConfTitleCon(confTitle);
-        return flag > 0 ? JSONResult.ok("修改议题结论成功"): JSONResult.errorMsg("修改议题结论失败!");
+        return flag > 0 ? JSONResult.ok("修改议题结论成功") : JSONResult.errorMsg("修改议题结论失败!");
     }
 
     /**
      * 查询会议的议题
+     *
      * @return
      */
     @PostMapping(value = "/{confid}/queryConftitles")
@@ -624,6 +726,7 @@ public class RecordConfController {
 
     /**
      * 直接开会
+     *
      * @param directConfForm
      * @return
      */
@@ -633,7 +736,7 @@ public class RecordConfController {
             Date current = new Date(System.currentTimeMillis());
             SimpleDateFormat simpleDateParser = new SimpleDateFormat("yyyy-MM-dd");
             String dateStr = simpleDateParser.format(current);
-            SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
             // 封装开会实体
             DirectConfWithBLOBs directConfWithBLOBs = new DirectConfWithBLOBs();
@@ -659,9 +762,9 @@ public class RecordConfController {
             directConfWithBLOBs.setSubtime(current);
             // TODO:录入临时会议内容
             int flag = recordConfInfoService.addDirectConf(directConfWithBLOBs);
-            return flag > 0? JSONResult.ok("录入会议成功") : JSONResult.errorMsg("对不起，录入会议内容失败，请稍后重试!");
+            return flag > 0 ? JSONResult.ok("录入会议成功") : JSONResult.errorMsg("对不起，录入会议内容失败，请稍后重试!");
         } catch (ParseException e) {
-             logger.error("录入直接会议失败," + e.getMessage());
+            logger.error("录入直接会议失败," + e.getMessage());
         }
         return JSONResult.errorMsg("对不起，录入会议记录失败，请稍后重试!");
     }
@@ -669,14 +772,41 @@ public class RecordConfController {
 
     /**
      * 获取会议的编号
+     *
      * @param confid
      * @return
      */
     @PostMapping(value = "/{confid}/querydirectconf")
     public JSONResult queryDirectConf(@PathVariable(value = "confid") String confid) {
         DirectConfDetailView records = recordConfInfoService.queryDirectConfRecord(confid);
-        return records!=null?JSONResult.ok(records):JSONResult.errorMsg("对不起查询会议详情失败!");
+        return records != null ? JSONResult.ok(records) : JSONResult.errorMsg("对不起查询会议详情失败!");
     }
+
+
+    /**
+     * 通过直接开会的会议材料
+     *
+     * @param confid
+     * @return
+     */
+    @PostMapping(value = "/{confid}/passconfrecord")
+    public JSONResult passconfrecord(@PathVariable(value = "confid") String confid) {
+        int flag = recordConfInfoService.passDirectConference(confid);
+        return flag > 0 ? JSONResult.ok("操作成功") : JSONResult.errorMsg("通过审核操作失败");
+    }
+
+    /**
+     * 不通过直接开会的会议材料
+     *
+     * @param confid
+     * @return
+     */
+    @PostMapping(value = "/{confid}/unpassconfrecord")
+    public JSONResult unpassconfrecord(@PathVariable(value = "confid") String confid) {
+        int flag = recordConfInfoService.unpassDirectConference(confid);
+        return flag > 0 ? JSONResult.ok("操作成功") : JSONResult.errorMsg("通过审核操作失败");
+    }
+
 
     /**
      * 封装的表格具体内容的实体

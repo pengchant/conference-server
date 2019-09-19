@@ -9,6 +9,7 @@ import com.justcs.mapper.*;
 import com.justcs.view.*;
 import com.mongodb.WriteResult;
 import com.mongodb.client.gridfs.GridFSBucket;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,6 +137,10 @@ public class RecordConfInfoService {
             // 查询会话记录(所有议题->所有会话->语音列表)
             List<ConfRecVoicDetailView> confRecVoicDetailViews = conferenceMapper.selectConfRecVoic(workerid);
             recordMaterial.setConfRecVoicDetailViewList(confRecVoicDetailViews);
+
+            // TODO: 查询conftitle的详细信息
+            List<ConfTitle> confTitles = confTitleMapper.selectCfTitlesByConfId(String.valueOf(basicConfInfoView.getConfid()));
+            recordMaterial.setConfTitleViewList(confTitles);
 
             return recordMaterial;
         }
@@ -556,6 +561,41 @@ public class RecordConfInfoService {
         }
         return null;
     }
+
+    /**
+     * 处理通过会议
+     * @param confid
+     * @return
+     */
+    @Transactional
+    public int passDirectConference(String confid) {
+        if(StringUtils.isNotBlank(confid)) {
+            DirectConf directConf = directConfMapper.selectByPrimaryKey(Integer.valueOf(confid));
+            if(directConf !=null) {
+                directConf.setConfstatus("5"); // 标记会议材料归档
+                return directConfMapper.updateByPrimaryKey(directConf);
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 处理不通过会议
+     * @param confid
+     * @return
+     */
+    @Transactional
+    public int unpassDirectConference(String confid) {
+        if(StringUtils.isNotBlank(confid)) {
+            DirectConf directConf = directConfMapper.selectByPrimaryKey(Integer.valueOf(confid));
+            if(directConf !=null) {
+                directConf.setConfstatus("102"); // 标记会议材料归档不通过
+                return directConfMapper.updateByPrimaryKey(directConf);
+            }
+        }
+        return 0;
+    }
+
 
 
 }

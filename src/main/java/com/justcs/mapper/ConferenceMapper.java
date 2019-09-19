@@ -700,7 +700,8 @@ public interface ConferenceMapper {
      */
     @Select({
             "<script>",
-            "select \n" +
+            // 查询预约会议
+            "select " +
                     "c.id as conferenceid,\n" +
                     "c.confname as confname,\n" +
                     "s.id as semesterid,\n" +
@@ -718,10 +719,11 @@ public interface ConferenceMapper {
                     "left join conflevel l on (c.conflevelid = l.id)\n" +
                     "left join meetingcollect e on (c.meetcollectid = e.id)\n" +
                     "left join confstatus t on (c.confstatusid = t.id)\n" +
-                    "where c.confstatusid='5'\n" +
+                    "where c.hosterid=#{workerid}\n" +
+                    "and c.confstatusid='5' \n" +
                     // 会议名称
                     "<if test='confname !=null and confname!=&apos;&apos;'>",
-            "and c.confname like CONCAT(CONCAT('%', #{confname}), '%')",
+            "and confname like CONCAT(CONCAT('%', #{confname}), '%')",
             "</if>",
             // 开始和结束时间
             "<if test=\"(starttime!=null and starttime!='') and (endtime==null or endtime=='')\">\n" +
@@ -735,13 +737,54 @@ public interface ConferenceMapper {
                     "            and\n" +
                     "            concat(#{endtime},' 23:59:59')\n" +
                     "        </if>",
+
+            // 查询直接开会会议
+            " union " +
+                    "select \n" +
+                    "d.id as conferenceid,\n" +
+                    "d.confname as confname,\n" +
+                    "s.id as semesterid,\n" +
+                    "s.semestername as semester,\n" +
+                    "d.conftypeid as levelid,\n" +
+                    "l.levelname as levelname,\n" +
+                    "d.recorderid as recorderid,\n" +
+                    "u.usrname as recorder," +
+                    "d.subtime as colltime,\n" +
+                    "d.confstatus as statusid,\n" +
+                    "t.confstatus as confstatus,\n" +
+                    " '0' as meetcollectid\n" +
+                    "from directconf d \n" +
+                    "\tleft join conflevel l on(l.id = d.conftypeid)\n" +
+                    "\tleft join userinfo u on (u.accid = d.recorderid)\n" +
+                    "\tleft join semester s on(s.id = d.semesterid)\n" +
+                    "\tleft join confstatus t on(t.id = d.confstatus)\n" +
+                    "where d.hosterid = #{workerid}\n" +
+                    "\tand d.confstatus = '5' " +
+                    // 会议名称
+                    "<if test='confname !=null and confname!=&apos;&apos;'>",
+            "and confname like CONCAT(CONCAT('%', #{confname}), '%')",
+            "</if>",
+            // 开始和结束时间
+            "<if test=\"(starttime!=null and starttime!='') and (endtime==null or endtime=='')\">\n" +
+                    "            and d.subtime &gt;= concat(#{starttime}, ' 00:00:00')\n" +
+                    "        </if>",
+            "<if test=\"(starttime==null or starttime=='') and (endtime!=null and endtime!='')\">\n" +
+                    "            and d.subtime &lt;= concat(#{endtime}, ' 23:59:59')\n" +
+                    "        </if>",
+            "<if test=\"(starttime!=null and starttime!='') and (endtime !=null and endtime!='')\">\n" +
+                    "            and d.subtime between concat(#{starttime},' 00:00:00')\n" +
+                    "            and\n" +
+                    "            concat(#{endtime},' 23:59:59')\n" +
+                    "        </if>",
+
+
             // 按照某个字段排序
             "<choose>",
             "<when test='sortby!=null and sortby!=&apos;&apos; and order !=null and order!=&apos;&apos;'>",
             "order by ${sortby} ${order}",
             "</when>",
             "<otherwise>",
-            "order by e.colltime desc",
+            "order by colltime desc",
             "</otherwise>",
             "</choose>",
             "</script>"
