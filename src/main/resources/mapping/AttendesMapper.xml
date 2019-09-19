@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.AttendesMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.Attendes" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="workerid" property="workerid" jdbcType="CHAR" />
+    <result column="wokername" property="wokername" jdbcType="CHAR" />
+    <result column="hasattend" property="hasattend" jdbcType="SMALLINT" />
+    <result column="confid" property="confid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, workerid, wokername, hasattend, confid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from attendes
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from attendes
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.Attendes" >
+    insert into attendes (id, workerid, wokername, 
+      hasattend, confid)
+    values (#{id,jdbcType=INTEGER}, #{workerid,jdbcType=CHAR}, #{wokername,jdbcType=CHAR}, 
+      #{hasattend,jdbcType=SMALLINT}, #{confid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.Attendes" >
+    insert into attendes
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="workerid != null" >
+        workerid,
+      </if>
+      <if test="wokername != null" >
+        wokername,
+      </if>
+      <if test="hasattend != null" >
+        hasattend,
+      </if>
+      <if test="confid != null" >
+        confid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workerid != null" >
+        #{workerid,jdbcType=CHAR},
+      </if>
+      <if test="wokername != null" >
+        #{wokername,jdbcType=CHAR},
+      </if>
+      <if test="hasattend != null" >
+        #{hasattend,jdbcType=SMALLINT},
+      </if>
+      <if test="confid != null" >
+        #{confid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.Attendes" >
+    update attendes
+    <set >
+      <if test="workerid != null" >
+        workerid = #{workerid,jdbcType=CHAR},
+      </if>
+      <if test="wokername != null" >
+        wokername = #{wokername,jdbcType=CHAR},
+      </if>
+      <if test="hasattend != null" >
+        hasattend = #{hasattend,jdbcType=SMALLINT},
+      </if>
+      <if test="confid != null" >
+        confid = #{confid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.justcs.entity.Attendes" >
+    update attendes
+    set workerid = #{workerid,jdbcType=CHAR},
+      wokername = #{wokername,jdbcType=CHAR},
+      hasattend = #{hasattend,jdbcType=SMALLINT},
+      confid = #{confid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

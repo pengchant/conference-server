@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.DirectConfMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.DirectConf" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="confname" property="confname" jdbcType="VARCHAR" />
+    <result column="semesterid" property="semesterid" jdbcType="INTEGER" />
+    <result column="semester" property="semester" jdbcType="VARCHAR" />
+    <result column="confattrs" property="confattrs" jdbcType="VARCHAR" />
+    <result column="conftypeid" property="conftypeid" jdbcType="INTEGER" />
+    <result column="conftypename" property="conftypename" jdbcType="VARCHAR" />
+    <result column="hosterid" property="hosterid" jdbcType="INTEGER" />
+    <result column="hoster" property="hoster" jdbcType="VARCHAR" />
+    <result column="recorderid" property="recorderid" jdbcType="INTEGER" />
+    <result column="recorder" property="recorder" jdbcType="VARCHAR" />
+    <result column="confaddress" property="confaddress" jdbcType="VARCHAR" />
+    <result column="confstarttime" property="confstarttime" jdbcType="TIMESTAMP" />
+    <result column="confendtime" property="confendtime" jdbcType="TIMESTAMP" />
+    <result column="attenders" property="attenders" jdbcType="VARCHAR" />
+    <result column="confstatus" property="confstatus" jdbcType="CHAR" />
+    <result column="subtime" property="subtime" jdbcType="TIMESTAMP" />
+    <result column="objtime" property="objtime" jdbcType="TIMESTAMP" />
+    <result column="other1" property="other1" jdbcType="VARCHAR" />
+    <result column="other2" property="other2" jdbcType="VARCHAR" />
+    <result column="other3" property="other3" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.justcs.entity.DirectConfWithBLOBs" extends="BaseResultMap" >
+    <result column="maincontent" property="maincontent" jdbcType="LONGVARCHAR" />
+    <result column="conclusion" property="conclusion" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, confname, semesterid, semester, confattrs, conftypeid, conftypename, hosterid, 
+    hoster, recorderid, recorder, confaddress, confstarttime, confendtime, attenders, 
+    confstatus, subtime, objtime, other1, other2, other3
+  </sql>
+  <sql id="Blob_Column_List" >
+    maincontent, conclusion
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from directconf
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from directconf
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.DirectConfWithBLOBs" >
+    insert into directconf (id, confname, semesterid, 
+      semester, confattrs, conftypeid, 
+      conftypename, hosterid, hoster, 
+      recorderid, recorder, confaddress, 
+      confstarttime, confendtime, attenders, 
+      confstatus, subtime, objtime, 
+      other1, other2, other3, 
+      maincontent, conclusion)
+    values (#{id,jdbcType=INTEGER}, #{confname,jdbcType=VARCHAR}, #{semesterid,jdbcType=INTEGER}, 
+      #{semester,jdbcType=VARCHAR}, #{confattrs,jdbcType=VARCHAR}, #{conftypeid,jdbcType=INTEGER}, 
+      #{conftypename,jdbcType=VARCHAR}, #{hosterid,jdbcType=INTEGER}, #{hoster,jdbcType=VARCHAR}, 
+      #{recorderid,jdbcType=INTEGER}, #{recorder,jdbcType=VARCHAR}, #{confaddress,jdbcType=VARCHAR}, 
+      #{confstarttime,jdbcType=TIMESTAMP}, #{confendtime,jdbcType=TIMESTAMP}, #{attenders,jdbcType=VARCHAR}, 
+      #{confstatus,jdbcType=CHAR}, #{subtime,jdbcType=TIMESTAMP}, #{objtime,jdbcType=TIMESTAMP}, 
+      #{other1,jdbcType=VARCHAR}, #{other2,jdbcType=VARCHAR}, #{other3,jdbcType=VARCHAR}, 
+      #{maincontent,jdbcType=LONGVARCHAR}, #{conclusion,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.DirectConfWithBLOBs" >
+    insert into directconf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="confname != null" >
+        confname,
+      </if>
+      <if test="semesterid != null" >
+        semesterid,
+      </if>
+      <if test="semester != null" >
+        semester,
+      </if>
+      <if test="confattrs != null" >
+        confattrs,
+      </if>
+      <if test="conftypeid != null" >
+        conftypeid,
+      </if>
+      <if test="conftypename != null" >
+        conftypename,
+      </if>
+      <if test="hosterid != null" >
+        hosterid,
+      </if>
+      <if test="hoster != null" >
+        hoster,
+      </if>
+      <if test="recorderid != null" >
+        recorderid,
+      </if>
+      <if test="recorder != null" >
+        recorder,
+      </if>
+      <if test="confaddress != null" >
+        confaddress,
+      </if>
+      <if test="confstarttime != null" >
+        confstarttime,
+      </if>
+      <if test="confendtime != null" >
+        confendtime,
+      </if>
+      <if test="attenders != null" >
+        attenders,
+      </if>
+      <if test="confstatus != null" >
+        confstatus,
+      </if>
+      <if test="subtime != null" >
+        subtime,
+      </if>
+      <if test="objtime != null" >
+        objtime,
+      </if>
+      <if test="other1 != null" >
+        other1,
+      </if>
+      <if test="other2 != null" >
+        other2,
+      </if>
+      <if test="other3 != null" >
+        other3,
+      </if>
+      <if test="maincontent != null" >
+        maincontent,
+      </if>
+      <if test="conclusion != null" >
+        conclusion,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="confname != null" >
+        #{confname,jdbcType=VARCHAR},
+      </if>
+      <if test="semesterid != null" >
+        #{semesterid,jdbcType=INTEGER},
+      </if>
+      <if test="semester != null" >
+        #{semester,jdbcType=VARCHAR},
+      </if>
+      <if test="confattrs != null" >
+        #{confattrs,jdbcType=VARCHAR},
+      </if>
+      <if test="conftypeid != null" >
+        #{conftypeid,jdbcType=INTEGER},
+      </if>
+      <if test="conftypename != null" >
+        #{conftypename,jdbcType=VARCHAR},
+      </if>
+      <if test="hosterid != null" >
+        #{hosterid,jdbcType=INTEGER},
+      </if>
+      <if test="hoster != null" >
+        #{hoster,jdbcType=VARCHAR},
+      </if>
+      <if test="recorderid != null" >
+        #{recorderid,jdbcType=INTEGER},
+      </if>
+      <if test="recorder != null" >
+        #{recorder,jdbcType=VARCHAR},
+      </if>
+      <if test="confaddress != null" >
+        #{confaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="confstarttime != null" >
+        #{confstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confendtime != null" >
+        #{confendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attenders != null" >
+        #{attenders,jdbcType=VARCHAR},
+      </if>
+      <if test="confstatus != null" >
+        #{confstatus,jdbcType=CHAR},
+      </if>
+      <if test="subtime != null" >
+        #{subtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="objtime != null" >
+        #{objtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="other1 != null" >
+        #{other1,jdbcType=VARCHAR},
+      </if>
+      <if test="other2 != null" >
+        #{other2,jdbcType=VARCHAR},
+      </if>
+      <if test="other3 != null" >
+        #{other3,jdbcType=VARCHAR},
+      </if>
+      <if test="maincontent != null" >
+        #{maincontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="conclusion != null" >
+        #{conclusion,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.DirectConfWithBLOBs" >
+    update directconf
+    <set >
+      <if test="confname != null" >
+        confname = #{confname,jdbcType=VARCHAR},
+      </if>
+      <if test="semesterid != null" >
+        semesterid = #{semesterid,jdbcType=INTEGER},
+      </if>
+      <if test="semester != null" >
+        semester = #{semester,jdbcType=VARCHAR},
+      </if>
+      <if test="confattrs != null" >
+        confattrs = #{confattrs,jdbcType=VARCHAR},
+      </if>
+      <if test="conftypeid != null" >
+        conftypeid = #{conftypeid,jdbcType=INTEGER},
+      </if>
+      <if test="conftypename != null" >
+        conftypename = #{conftypename,jdbcType=VARCHAR},
+      </if>
+      <if test="hosterid != null" >
+        hosterid = #{hosterid,jdbcType=INTEGER},
+      </if>
+      <if test="hoster != null" >
+        hoster = #{hoster,jdbcType=VARCHAR},
+      </if>
+      <if test="recorderid != null" >
+        recorderid = #{recorderid,jdbcType=INTEGER},
+      </if>
+      <if test="recorder != null" >
+        recorder = #{recorder,jdbcType=VARCHAR},
+      </if>
+      <if test="confaddress != null" >
+        confaddress = #{confaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="confstarttime != null" >
+        confstarttime = #{confstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confendtime != null" >
+        confendtime = #{confendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attenders != null" >
+        attenders = #{attenders,jdbcType=VARCHAR},
+      </if>
+      <if test="confstatus != null" >
+        confstatus = #{confstatus,jdbcType=CHAR},
+      </if>
+      <if test="subtime != null" >
+        subtime = #{subtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="objtime != null" >
+        objtime = #{objtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="other1 != null" >
+        other1 = #{other1,jdbcType=VARCHAR},
+      </if>
+      <if test="other2 != null" >
+        other2 = #{other2,jdbcType=VARCHAR},
+      </if>
+      <if test="other3 != null" >
+        other3 = #{other3,jdbcType=VARCHAR},
+      </if>
+      <if test="maincontent != null" >
+        maincontent = #{maincontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="conclusion != null" >
+        conclusion = #{conclusion,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.justcs.entity.DirectConfWithBLOBs" >
+    update directconf
+    set confname = #{confname,jdbcType=VARCHAR},
+      semesterid = #{semesterid,jdbcType=INTEGER},
+      semester = #{semester,jdbcType=VARCHAR},
+      confattrs = #{confattrs,jdbcType=VARCHAR},
+      conftypeid = #{conftypeid,jdbcType=INTEGER},
+      conftypename = #{conftypename,jdbcType=VARCHAR},
+      hosterid = #{hosterid,jdbcType=INTEGER},
+      hoster = #{hoster,jdbcType=VARCHAR},
+      recorderid = #{recorderid,jdbcType=INTEGER},
+      recorder = #{recorder,jdbcType=VARCHAR},
+      confaddress = #{confaddress,jdbcType=VARCHAR},
+      confstarttime = #{confstarttime,jdbcType=TIMESTAMP},
+      confendtime = #{confendtime,jdbcType=TIMESTAMP},
+      attenders = #{attenders,jdbcType=VARCHAR},
+      confstatus = #{confstatus,jdbcType=CHAR},
+      subtime = #{subtime,jdbcType=TIMESTAMP},
+      objtime = #{objtime,jdbcType=TIMESTAMP},
+      other1 = #{other1,jdbcType=VARCHAR},
+      other2 = #{other2,jdbcType=VARCHAR},
+      other3 = #{other3,jdbcType=VARCHAR},
+      maincontent = #{maincontent,jdbcType=LONGVARCHAR},
+      conclusion = #{conclusion,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.justcs.entity.DirectConf" >
+    update directconf
+    set confname = #{confname,jdbcType=VARCHAR},
+      semesterid = #{semesterid,jdbcType=INTEGER},
+      semester = #{semester,jdbcType=VARCHAR},
+      confattrs = #{confattrs,jdbcType=VARCHAR},
+      conftypeid = #{conftypeid,jdbcType=INTEGER},
+      conftypename = #{conftypename,jdbcType=VARCHAR},
+      hosterid = #{hosterid,jdbcType=INTEGER},
+      hoster = #{hoster,jdbcType=VARCHAR},
+      recorderid = #{recorderid,jdbcType=INTEGER},
+      recorder = #{recorder,jdbcType=VARCHAR},
+      confaddress = #{confaddress,jdbcType=VARCHAR},
+      confstarttime = #{confstarttime,jdbcType=TIMESTAMP},
+      confendtime = #{confendtime,jdbcType=TIMESTAMP},
+      attenders = #{attenders,jdbcType=VARCHAR},
+      confstatus = #{confstatus,jdbcType=CHAR},
+      subtime = #{subtime,jdbcType=TIMESTAMP},
+      objtime = #{objtime,jdbcType=TIMESTAMP},
+      other1 = #{other1,jdbcType=VARCHAR},
+      other2 = #{other2,jdbcType=VARCHAR},
+      other3 = #{other3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

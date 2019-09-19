@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.OpConflogMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.OpConflog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="opworkerid" property="opworkerid" jdbcType="CHAR" />
+    <result column="opworker" property="opworker" jdbcType="CHAR" />
+    <result column="opdescription" property="opdescription" jdbcType="VARCHAR" />
+    <result column="operip" property="operip" jdbcType="CHAR" />
+    <result column="device" property="device" jdbcType="VARCHAR" />
+    <result column="confid" property="confid" jdbcType="INTEGER" />
+    <result column="optime" property="optime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, opworkerid, opworker, opdescription, operip, device, confid, optime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from opconflog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from opconflog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.OpConflog" >
+    insert into opconflog (id, opworkerid, opworker, 
+      opdescription, operip, device, 
+      confid, optime)
+    values (#{id,jdbcType=INTEGER}, #{opworkerid,jdbcType=CHAR}, #{opworker,jdbcType=CHAR}, 
+      #{opdescription,jdbcType=VARCHAR}, #{operip,jdbcType=CHAR}, #{device,jdbcType=VARCHAR}, 
+      #{confid,jdbcType=INTEGER}, #{optime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.OpConflog" >
+    insert into opconflog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="opworkerid != null" >
+        opworkerid,
+      </if>
+      <if test="opworker != null" >
+        opworker,
+      </if>
+      <if test="opdescription != null" >
+        opdescription,
+      </if>
+      <if test="operip != null" >
+        operip,
+      </if>
+      <if test="device != null" >
+        device,
+      </if>
+      <if test="confid != null" >
+        confid,
+      </if>
+      <if test="optime != null" >
+        optime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="opworkerid != null" >
+        #{opworkerid,jdbcType=CHAR},
+      </if>
+      <if test="opworker != null" >
+        #{opworker,jdbcType=CHAR},
+      </if>
+      <if test="opdescription != null" >
+        #{opdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="operip != null" >
+        #{operip,jdbcType=CHAR},
+      </if>
+      <if test="device != null" >
+        #{device,jdbcType=VARCHAR},
+      </if>
+      <if test="confid != null" >
+        #{confid,jdbcType=INTEGER},
+      </if>
+      <if test="optime != null" >
+        #{optime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.OpConflog" >
+    update opconflog
+    <set >
+      <if test="opworkerid != null" >
+        opworkerid = #{opworkerid,jdbcType=CHAR},
+      </if>
+      <if test="opworker != null" >
+        opworker = #{opworker,jdbcType=CHAR},
+      </if>
+      <if test="opdescription != null" >
+        opdescription = #{opdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="operip != null" >
+        operip = #{operip,jdbcType=CHAR},
+      </if>
+      <if test="device != null" >
+        device = #{device,jdbcType=VARCHAR},
+      </if>
+      <if test="confid != null" >
+        confid = #{confid,jdbcType=INTEGER},
+      </if>
+      <if test="optime != null" >
+        optime = #{optime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.justcs.entity.OpConflog" >
+    update opconflog
+    set opworkerid = #{opworkerid,jdbcType=CHAR},
+      opworker = #{opworker,jdbcType=CHAR},
+      opdescription = #{opdescription,jdbcType=VARCHAR},
+      operip = #{operip,jdbcType=CHAR},
+      device = #{device,jdbcType=VARCHAR},
+      confid = #{confid,jdbcType=INTEGER},
+      optime = #{optime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

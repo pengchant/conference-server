@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.MeetingRoomMapper">
+    <resultMap id="BaseResultMap" type="com.justcs.entity.MeetingRoom">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="department" property="department" jdbcType="INTEGER"/>
+        <result column="roomname" property="roomname" jdbcType="CHAR"/>
+        <result column="maxcontain" property="maxcontain" jdbcType="INTEGER"/>
+        <result column="aircondition" property="aircondition" jdbcType="SMALLINT"/>
+        <result column="projector" property="projector" jdbcType="SMALLINT"/>
+        <result column="microphone" property="microphone" jdbcType="SMALLINT"/>
+        <result column="stereo" property="stereo" jdbcType="SMALLINT"/>
+        <result column="podium" property="podium" jdbcType="SMALLINT"/>
+        <result column="lightequ" property="lightequ" jdbcType="SMALLINT"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="meetingroomurl" property="meetingroomurl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, department, roomname, maxcontain, aircondition, projector, microphone, stereo, 
+    podium, lightequ, address, meetingroomurl
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from meetingroom
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from meetingroom
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.justcs.entity.MeetingRoom">
+    insert into meetingroom (id, department, roomname, 
+      maxcontain, aircondition, projector, 
+      microphone, stereo, podium, 
+      lightequ, address, meetingroomurl
+      )
+    values (#{id,jdbcType=INTEGER}, #{department,jdbcType=INTEGER}, #{roomname,jdbcType=CHAR}, 
+      #{maxcontain,jdbcType=INTEGER}, #{aircondition,jdbcType=SMALLINT}, #{projector,jdbcType=SMALLINT}, 
+      #{microphone,jdbcType=SMALLINT}, #{stereo,jdbcType=SMALLINT}, #{podium,jdbcType=SMALLINT}, 
+      #{lightequ,jdbcType=SMALLINT}, #{address,jdbcType=VARCHAR}, #{meetingroomurl,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.justcs.entity.MeetingRoom" keyProperty="id" useGeneratedKeys="true">
+        insert into meetingroom
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="department != null">
+                department,
+            </if>
+            <if test="roomname != null">
+                roomname,
+            </if>
+            <if test="maxcontain != null">
+                maxcontain,
+            </if>
+            <if test="aircondition != null">
+                aircondition,
+            </if>
+            <if test="projector != null">
+                projector,
+            </if>
+            <if test="microphone != null">
+                microphone,
+            </if>
+            <if test="stereo != null">
+                stereo,
+            </if>
+            <if test="podium != null">
+                podium,
+            </if>
+            <if test="lightequ != null">
+                lightequ,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="meetingroomurl != null">
+                meetingroomurl,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="department != null">
+                #{department,jdbcType=INTEGER},
+            </if>
+            <if test="roomname != null">
+                #{roomname,jdbcType=CHAR},
+            </if>
+            <if test="maxcontain != null">
+                #{maxcontain,jdbcType=INTEGER},
+            </if>
+            <if test="aircondition != null">
+                #{aircondition,jdbcType=SMALLINT},
+            </if>
+            <if test="projector != null">
+                #{projector,jdbcType=SMALLINT},
+            </if>
+            <if test="microphone != null">
+                #{microphone,jdbcType=SMALLINT},
+            </if>
+            <if test="stereo != null">
+                #{stereo,jdbcType=SMALLINT},
+            </if>
+            <if test="podium != null">
+                #{podium,jdbcType=SMALLINT},
+            </if>
+            <if test="lightequ != null">
+                #{lightequ,jdbcType=SMALLINT},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="meetingroomurl != null">
+                #{meetingroomurl,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.MeetingRoom">
+        update meetingroom
+        <set>
+            <if test="department != null">
+                department = #{department,jdbcType=INTEGER},
+            </if>
+            <if test="roomname != null">
+                roomname = #{roomname,jdbcType=CHAR},
+            </if>
+            <if test="maxcontain != null">
+                maxcontain = #{maxcontain,jdbcType=INTEGER},
+            </if>
+            <if test="aircondition != null">
+                aircondition = #{aircondition,jdbcType=SMALLINT},
+            </if>
+            <if test="projector != null">
+                projector = #{projector,jdbcType=SMALLINT},
+            </if>
+            <if test="microphone != null">
+                microphone = #{microphone,jdbcType=SMALLINT},
+            </if>
+            <if test="stereo != null">
+                stereo = #{stereo,jdbcType=SMALLINT},
+            </if>
+            <if test="podium != null">
+                podium = #{podium,jdbcType=SMALLINT},
+            </if>
+            <if test="lightequ != null">
+                lightequ = #{lightequ,jdbcType=SMALLINT},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="meetingroomurl != null">
+                meetingroomurl = #{meetingroomurl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.justcs.entity.MeetingRoom">
+    update meetingroom
+    set department = #{department,jdbcType=INTEGER},
+      roomname = #{roomname,jdbcType=CHAR},
+      maxcontain = #{maxcontain,jdbcType=INTEGER},
+      aircondition = #{aircondition,jdbcType=SMALLINT},
+      projector = #{projector,jdbcType=SMALLINT},
+      microphone = #{microphone,jdbcType=SMALLINT},
+      stereo = #{stereo,jdbcType=SMALLINT},
+      podium = #{podium,jdbcType=SMALLINT},
+      lightequ = #{lightequ,jdbcType=SMALLINT},
+      address = #{address,jdbcType=VARCHAR},
+      meetingroomurl = #{meetingroomurl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

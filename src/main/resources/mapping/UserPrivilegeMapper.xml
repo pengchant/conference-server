@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.UserPrivilegeMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.UserPrivilegeKey" >
+    <id column="roleid" property="roleid" jdbcType="INTEGER" />
+    <id column="priviid" property="priviid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.justcs.entity.UserPrivilegeKey" >
+    delete from userprivilege
+    where roleid = #{roleid,jdbcType=INTEGER}
+      and priviid = #{priviid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.UserPrivilegeKey" >
+    insert into userprivilege (roleid, priviid)
+    values (#{roleid,jdbcType=INTEGER}, #{priviid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.UserPrivilegeKey" >
+    insert into userprivilege
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        roleid,
+      </if>
+      <if test="priviid != null" >
+        priviid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="priviid != null" >
+        #{priviid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

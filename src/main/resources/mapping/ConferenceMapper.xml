@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.ConferenceMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.Conference" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="confname" property="confname" jdbcType="VARCHAR" />
+    <result column="semesterid" property="semesterid" jdbcType="INTEGER" />
+    <result column="conflevelid" property="conflevelid" jdbcType="INTEGER" />
+    <result column="confstatusid" property="confstatusid" jdbcType="INTEGER" />
+    <result column="hosterid" property="hosterid" jdbcType="CHAR" />
+    <result column="hoster" property="hoster" jdbcType="CHAR" />
+    <result column="recorderid" property="recorderid" jdbcType="CHAR" />
+    <result column="recorder" property="recorder" jdbcType="CHAR" />
+    <result column="confqrcodeurl" property="confqrcodeurl" jdbcType="VARCHAR" />
+    <result column="meetcollectid" property="meetcollectid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.justcs.entity.ConferenceWithBLOBs" extends="BaseResultMap" >
+    <result column="conclusion" property="conclusion" jdbcType="LONGVARCHAR" />
+    <result column="abstractcont" property="abstractcont" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, confname, semesterid, conflevelid, confstatusid, hosterid, hoster, recorderid, 
+    recorder, confqrcodeurl, meetcollectid
+  </sql>
+  <sql id="Blob_Column_List" >
+    conclusion, abstractcont
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from conference
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from conference
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.ConferenceWithBLOBs" >
+    insert into conference (id, confname, semesterid, 
+      conflevelid, confstatusid, hosterid, 
+      hoster, recorderid, recorder, 
+      confqrcodeurl, meetcollectid, conclusion, 
+      abstractcont)
+    values (#{id,jdbcType=INTEGER}, #{confname,jdbcType=VARCHAR}, #{semesterid,jdbcType=INTEGER}, 
+      #{conflevelid,jdbcType=INTEGER}, #{confstatusid,jdbcType=INTEGER}, #{hosterid,jdbcType=CHAR}, 
+      #{hoster,jdbcType=CHAR}, #{recorderid,jdbcType=CHAR}, #{recorder,jdbcType=CHAR}, 
+      #{confqrcodeurl,jdbcType=VARCHAR}, #{meetcollectid,jdbcType=INTEGER}, #{conclusion,jdbcType=LONGVARCHAR}, 
+      #{abstractcont,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.ConferenceWithBLOBs" useGeneratedKeys="true" keyProperty="id">
+    insert into conference
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="confname != null" >
+        confname,
+      </if>
+      <if test="semesterid != null" >
+        semesterid,
+      </if>
+      <if test="conflevelid != null" >
+        conflevelid,
+      </if>
+      <if test="confstatusid != null" >
+        confstatusid,
+      </if>
+      <if test="hosterid != null" >
+        hosterid,
+      </if>
+      <if test="hoster != null" >
+        hoster,
+      </if>
+      <if test="recorderid != null" >
+        recorderid,
+      </if>
+      <if test="recorder != null" >
+        recorder,
+      </if>
+      <if test="confqrcodeurl != null" >
+        confqrcodeurl,
+      </if>
+      <if test="meetcollectid != null" >
+        meetcollectid,
+      </if>
+      <if test="conclusion != null" >
+        conclusion,
+      </if>
+      <if test="abstractcont != null" >
+        abstractcont,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="confname != null" >
+        #{confname,jdbcType=VARCHAR},
+      </if>
+      <if test="semesterid != null" >
+        #{semesterid,jdbcType=INTEGER},
+      </if>
+      <if test="conflevelid != null" >
+        #{conflevelid,jdbcType=INTEGER},
+      </if>
+      <if test="confstatusid != null" >
+        #{confstatusid,jdbcType=INTEGER},
+      </if>
+      <if test="hosterid != null" >
+        #{hosterid,jdbcType=CHAR},
+      </if>
+      <if test="hoster != null" >
+        #{hoster,jdbcType=CHAR},
+      </if>
+      <if test="recorderid != null" >
+        #{recorderid,jdbcType=CHAR},
+      </if>
+      <if test="recorder != null" >
+        #{recorder,jdbcType=CHAR},
+      </if>
+      <if test="confqrcodeurl != null" >
+        #{confqrcodeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="meetcollectid != null" >
+        #{meetcollectid,jdbcType=INTEGER},
+      </if>
+      <if test="conclusion != null" >
+        #{conclusion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="abstractcont != null" >
+        #{abstractcont,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.ConferenceWithBLOBs" >
+    update conference
+    <set >
+      <if test="confname != null" >
+        confname = #{confname,jdbcType=VARCHAR},
+      </if>
+      <if test="semesterid != null" >
+        semesterid = #{semesterid,jdbcType=INTEGER},
+      </if>
+      <if test="conflevelid != null" >
+        conflevelid = #{conflevelid,jdbcType=INTEGER},
+      </if>
+      <if test="confstatusid != null" >
+        confstatusid = #{confstatusid,jdbcType=INTEGER},
+      </if>
+      <if test="hosterid != null" >
+        hosterid = #{hosterid,jdbcType=CHAR},
+      </if>
+      <if test="hoster != null" >
+        hoster = #{hoster,jdbcType=CHAR},
+      </if>
+      <if test="recorderid != null" >
+        recorderid = #{recorderid,jdbcType=CHAR},
+      </if>
+      <if test="recorder != null" >
+        recorder = #{recorder,jdbcType=CHAR},
+      </if>
+      <if test="confqrcodeurl != null" >
+        confqrcodeurl = #{confqrcodeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="meetcollectid != null" >
+        meetcollectid = #{meetcollectid,jdbcType=INTEGER},
+      </if>
+      <if test="conclusion != null" >
+        conclusion = #{conclusion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="abstractcont != null" >
+        abstractcont = #{abstractcont,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.justcs.entity.ConferenceWithBLOBs" >
+    update conference
+    set confname = #{confname,jdbcType=VARCHAR},
+      semesterid = #{semesterid,jdbcType=INTEGER},
+      conflevelid = #{conflevelid,jdbcType=INTEGER},
+      confstatusid = #{confstatusid,jdbcType=INTEGER},
+      hosterid = #{hosterid,jdbcType=CHAR},
+      hoster = #{hoster,jdbcType=CHAR},
+      recorderid = #{recorderid,jdbcType=CHAR},
+      recorder = #{recorder,jdbcType=CHAR},
+      confqrcodeurl = #{confqrcodeurl,jdbcType=VARCHAR},
+      meetcollectid = #{meetcollectid,jdbcType=INTEGER},
+      conclusion = #{conclusion,jdbcType=LONGVARCHAR},
+      abstractcont = #{abstractcont,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.justcs.entity.Conference" >
+    update conference
+    set confname = #{confname,jdbcType=VARCHAR},
+      semesterid = #{semesterid,jdbcType=INTEGER},
+      conflevelid = #{conflevelid,jdbcType=INTEGER},
+      confstatusid = #{confstatusid,jdbcType=INTEGER},
+      hosterid = #{hosterid,jdbcType=CHAR},
+      hoster = #{hoster,jdbcType=CHAR},
+      recorderid = #{recorderid,jdbcType=CHAR},
+      recorder = #{recorder,jdbcType=CHAR},
+      confqrcodeurl = #{confqrcodeurl,jdbcType=VARCHAR},
+      meetcollectid = #{meetcollectid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

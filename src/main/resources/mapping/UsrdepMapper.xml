@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.UsrdepMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.UsrdepKey" >
+    <id column="depid" property="depid" jdbcType="INTEGER" />
+    <id column="usrid" property="usrid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.justcs.entity.UsrdepKey" >
+    delete from usrdep
+    where depid = #{depid,jdbcType=INTEGER}
+      and usrid = #{usrid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.UsrdepKey" >
+    insert into usrdep (depid, usrid)
+    values (#{depid,jdbcType=INTEGER}, #{usrid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.UsrdepKey" >
+    insert into usrdep
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="depid != null" >
+        depid,
+      </if>
+      <if test="usrid != null" >
+        usrid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="depid != null" >
+        #{depid,jdbcType=INTEGER},
+      </if>
+      <if test="usrid != null" >
+        #{usrid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.MeetingCollectMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.MeetingCollect" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="collegeleader" property="collegeleader" jdbcType="CHAR" />
+    <result column="colltime" property="colltime" jdbcType="TIMESTAMP" />
+    <result column="termyear" property="termyear" jdbcType="CHAR" />
+    <result column="meetsemesters" property="meetsemesters" jdbcType="CHAR" />
+    <result column="meetweeks" property="meetweeks" jdbcType="CHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="meetcollectsts" property="meetcollectsts" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, collegeleader, colltime, termyear, meetsemesters, meetweeks, department, meetcollectsts
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from meetingcollect
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from meetingcollect
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.MeetingCollect" >
+    insert into meetingcollect (id, collegeleader, colltime, 
+      termyear, meetsemesters, meetweeks, 
+      department, meetcollectsts)
+    values (#{id,jdbcType=INTEGER}, #{collegeleader,jdbcType=CHAR}, #{colltime,jdbcType=TIMESTAMP}, 
+      #{termyear,jdbcType=CHAR}, #{meetsemesters,jdbcType=CHAR}, #{meetweeks,jdbcType=CHAR}, 
+      #{department,jdbcType=VARCHAR}, #{meetcollectsts,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.MeetingCollect" useGeneratedKeys="true" keyProperty="id">
+    insert into meetingcollect
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="collegeleader != null" >
+        collegeleader,
+      </if>
+      <if test="colltime != null" >
+        colltime,
+      </if>
+      <if test="termyear != null" >
+        termyear,
+      </if>
+      <if test="meetsemesters != null" >
+        meetsemesters,
+      </if>
+      <if test="meetweeks != null" >
+        meetweeks,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="meetcollectsts != null" >
+        meetcollectsts,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="collegeleader != null" >
+        #{collegeleader,jdbcType=CHAR},
+      </if>
+      <if test="colltime != null" >
+        #{colltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="termyear != null" >
+        #{termyear,jdbcType=CHAR},
+      </if>
+      <if test="meetsemesters != null" >
+        #{meetsemesters,jdbcType=CHAR},
+      </if>
+      <if test="meetweeks != null" >
+        #{meetweeks,jdbcType=CHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="meetcollectsts != null" >
+        #{meetcollectsts,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.MeetingCollect" >
+    update meetingcollect
+    <set >
+      <if test="collegeleader != null" >
+        collegeleader = #{collegeleader,jdbcType=CHAR},
+      </if>
+      <if test="colltime != null" >
+        colltime = #{colltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="termyear != null" >
+        termyear = #{termyear,jdbcType=CHAR},
+      </if>
+      <if test="meetsemesters != null" >
+        meetsemesters = #{meetsemesters,jdbcType=CHAR},
+      </if>
+      <if test="meetweeks != null" >
+        meetweeks = #{meetweeks,jdbcType=CHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="meetcollectsts != null" >
+        meetcollectsts = #{meetcollectsts,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.justcs.entity.MeetingCollect" >
+    update meetingcollect
+    set collegeleader = #{collegeleader,jdbcType=CHAR},
+      colltime = #{colltime,jdbcType=TIMESTAMP},
+      termyear = #{termyear,jdbcType=CHAR},
+      meetsemesters = #{meetsemesters,jdbcType=CHAR},
+      meetweeks = #{meetweeks,jdbcType=CHAR},
+      department = #{department,jdbcType=VARCHAR},
+      meetcollectsts = #{meetcollectsts,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

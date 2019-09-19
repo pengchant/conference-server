@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.MpositionMapper">
+    <resultMap id="BaseResultMap" type="com.justcs.entity.Mposition">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="position" property="position" jdbcType="CHAR"/>
+        <result column="positionnum" property="positionnum" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, position, positionnum
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from mposition
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mposition
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.justcs.entity.Mposition">
+    insert into mposition (id, position, positionnum
+      )
+    values (#{id,jdbcType=INTEGER}, #{position,jdbcType=CHAR}, #{positionnum,jdbcType=CHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.justcs.entity.Mposition">
+        insert into mposition
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="positionnum != null">
+                positionnum,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=CHAR},
+            </if>
+            <if test="positionnum != null">
+                #{positionnum,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.Mposition">
+        update mposition
+        <set>
+            <if test="position != null">
+                position = #{position,jdbcType=CHAR},
+            </if>
+            <if test="positionnum != null">
+                positionnum = #{positionnum,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.justcs.entity.Mposition">
+    update mposition
+    set position = #{position,jdbcType=CHAR},
+      positionnum = #{positionnum,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

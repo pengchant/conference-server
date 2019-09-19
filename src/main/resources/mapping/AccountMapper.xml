@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.AccountMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.Account" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="workerid" property="workerid" jdbcType="CHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="wxopenid" property="wxopenid" jdbcType="VARCHAR" />
+    <result column="wxflag" property="wxflag" jdbcType="SMALLINT" />
+    <result column="registtime" property="registtime" jdbcType="TIMESTAMP" />
+    <result column="phonenum" property="phonenum" jdbcType="CHAR" />
+    <result column="pwd" property="pwd" jdbcType="CHAR" />
+    <result column="userstatus" property="userstatus" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, workerid, email, wxopenid, wxflag, registtime, phonenum, pwd, userstatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from account
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.Account" useGeneratedKeys="true" keyProperty="id">
+    insert into account (id, workerid, email, 
+      wxopenid, wxflag, registtime, 
+      phonenum, pwd, userstatus
+      )
+    values (#{id,jdbcType=INTEGER}, #{workerid,jdbcType=CHAR}, #{email,jdbcType=VARCHAR}, 
+      #{wxopenid,jdbcType=VARCHAR}, #{wxflag,jdbcType=SMALLINT}, #{registtime,jdbcType=TIMESTAMP}, 
+      #{phonenum,jdbcType=CHAR}, #{pwd,jdbcType=CHAR}, #{userstatus,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.Account" useGeneratedKeys="true" keyProperty="id">
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="workerid != null" >
+        workerid,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="wxopenid != null" >
+        wxopenid,
+      </if>
+      <if test="wxflag != null" >
+        wxflag,
+      </if>
+      <if test="registtime != null" >
+        registtime,
+      </if>
+      <if test="phonenum != null" >
+        phonenum,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="userstatus != null" >
+        userstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="workerid != null" >
+        #{workerid,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wxopenid != null" >
+        #{wxopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="wxflag != null" >
+        #{wxflag,jdbcType=SMALLINT},
+      </if>
+      <if test="registtime != null" >
+        #{registtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phonenum != null" >
+        #{phonenum,jdbcType=CHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=CHAR},
+      </if>
+      <if test="userstatus != null" >
+        #{userstatus,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.Account" >
+    update account
+    <set >
+      <if test="workerid != null" >
+        workerid = #{workerid,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="wxopenid != null" >
+        wxopenid = #{wxopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="wxflag != null" >
+        wxflag = #{wxflag,jdbcType=SMALLINT},
+      </if>
+      <if test="registtime != null" >
+        registtime = #{registtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="phonenum != null" >
+        phonenum = #{phonenum,jdbcType=CHAR},
+      </if>
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=CHAR},
+      </if>
+      <if test="userstatus != null" >
+        userstatus = #{userstatus,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.justcs.entity.Account" >
+    update account
+    set workerid = #{workerid,jdbcType=CHAR},
+      email = #{email,jdbcType=VARCHAR},
+      wxopenid = #{wxopenid,jdbcType=VARCHAR},
+      wxflag = #{wxflag,jdbcType=SMALLINT},
+      registtime = #{registtime,jdbcType=TIMESTAMP},
+      phonenum = #{phonenum,jdbcType=CHAR},
+      pwd = #{pwd,jdbcType=CHAR},
+      userstatus = #{userstatus,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

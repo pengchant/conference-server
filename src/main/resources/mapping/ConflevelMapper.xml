@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.ConflevelMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.Conflevel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="levelname" property="levelname" jdbcType="VARCHAR" />
+    <result column="leveldes" property="leveldes" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, levelname, leveldes
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from conflevel
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from conflevel
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.Conflevel" >
+    insert into conflevel (id, levelname, leveldes
+      )
+    values (#{id,jdbcType=INTEGER}, #{levelname,jdbcType=VARCHAR}, #{leveldes,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.Conflevel" >
+    insert into conflevel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="levelname != null" >
+        levelname,
+      </if>
+      <if test="leveldes != null" >
+        leveldes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="levelname != null" >
+        #{levelname,jdbcType=VARCHAR},
+      </if>
+      <if test="leveldes != null" >
+        #{leveldes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.Conflevel" >
+    update conflevel
+    <set >
+      <if test="levelname != null" >
+        levelname = #{levelname,jdbcType=VARCHAR},
+      </if>
+      <if test="leveldes != null" >
+        leveldes = #{leveldes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.justcs.entity.Conflevel" >
+    update conflevel
+    set levelname = #{levelname,jdbcType=VARCHAR},
+      leveldes = #{leveldes,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

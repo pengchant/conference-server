@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.UserinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.Userinfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="accid" property="accid" jdbcType="INTEGER" />
+    <result column="usrname" property="usrname" jdbcType="CHAR" />
+    <result column="idcard" property="idcard" jdbcType="CHAR" />
+    <result column="gender" property="gender" jdbcType="SMALLINT" />
+    <result column="national" property="national" jdbcType="CHAR" />
+    <result column="recofschool" property="recofschool" jdbcType="CHAR" />
+    <result column="entparttime" property="entparttime" jdbcType="TIMESTAMP" />
+    <result column="formtime" property="formtime" jdbcType="TIMESTAMP" />
+    <result column="partstatus" property="partstatus" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, accid, usrname, idcard, gender, national, recofschool, entparttime, formtime, 
+    partstatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.Userinfo" useGeneratedKeys="true" keyProperty="id">
+    insert into userinfo (id, accid, usrname, 
+      idcard, gender, national, 
+      recofschool, entparttime, formtime, 
+      partstatus)
+    values (#{id,jdbcType=INTEGER}, #{accid,jdbcType=INTEGER}, #{usrname,jdbcType=CHAR}, 
+      #{idcard,jdbcType=CHAR}, #{gender,jdbcType=SMALLINT}, #{national,jdbcType=CHAR}, 
+      #{recofschool,jdbcType=CHAR}, #{entparttime,jdbcType=TIMESTAMP}, #{formtime,jdbcType=TIMESTAMP}, 
+      #{partstatus,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.Userinfo" useGeneratedKeys="true" keyProperty="id">
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="accid != null" >
+        accid,
+      </if>
+      <if test="usrname != null" >
+        usrname,
+      </if>
+      <if test="idcard != null" >
+        idcard,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="national != null" >
+        national,
+      </if>
+      <if test="recofschool != null" >
+        recofschool,
+      </if>
+      <if test="entparttime != null" >
+        entparttime,
+      </if>
+      <if test="formtime != null" >
+        formtime,
+      </if>
+      <if test="partstatus != null" >
+        partstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="accid != null" >
+        #{accid,jdbcType=INTEGER},
+      </if>
+      <if test="usrname != null" >
+        #{usrname,jdbcType=CHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=CHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=SMALLINT},
+      </if>
+      <if test="national != null" >
+        #{national,jdbcType=CHAR},
+      </if>
+      <if test="recofschool != null" >
+        #{recofschool,jdbcType=CHAR},
+      </if>
+      <if test="entparttime != null" >
+        #{entparttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="formtime != null" >
+        #{formtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="partstatus != null" >
+        #{partstatus,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.Userinfo" >
+    update userinfo
+    <set >
+      <if test="accid != null" >
+        accid = #{accid,jdbcType=INTEGER},
+      </if>
+      <if test="usrname != null" >
+        usrname = #{usrname,jdbcType=CHAR},
+      </if>
+      <if test="idcard != null" >
+        idcard = #{idcard,jdbcType=CHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=SMALLINT},
+      </if>
+      <if test="national != null" >
+        national = #{national,jdbcType=CHAR},
+      </if>
+      <if test="recofschool != null" >
+        recofschool = #{recofschool,jdbcType=CHAR},
+      </if>
+      <if test="entparttime != null" >
+        entparttime = #{entparttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="formtime != null" >
+        formtime = #{formtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="partstatus != null" >
+        partstatus = #{partstatus,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.justcs.entity.Userinfo" >
+    update userinfo
+    set accid = #{accid,jdbcType=INTEGER},
+      usrname = #{usrname,jdbcType=CHAR},
+      idcard = #{idcard,jdbcType=CHAR},
+      gender = #{gender,jdbcType=SMALLINT},
+      national = #{national,jdbcType=CHAR},
+      recofschool = #{recofschool,jdbcType=CHAR},
+      entparttime = #{entparttime,jdbcType=TIMESTAMP},
+      formtime = #{formtime,jdbcType=TIMESTAMP},
+      partstatus = #{partstatus,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

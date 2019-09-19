@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.ConfStatusMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.ConfStatus" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="confstatus" property="confstatus" jdbcType="CHAR" />
+    <result column="confdes" property="confdes" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, confstatus, confdes
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from confstatus
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from confstatus
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.ConfStatus" >
+    insert into confstatus (id, confstatus, confdes
+      )
+    values (#{id,jdbcType=INTEGER}, #{confstatus,jdbcType=CHAR}, #{confdes,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.ConfStatus" >
+    insert into confstatus
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="confstatus != null" >
+        confstatus,
+      </if>
+      <if test="confdes != null" >
+        confdes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="confstatus != null" >
+        #{confstatus,jdbcType=CHAR},
+      </if>
+      <if test="confdes != null" >
+        #{confdes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.ConfStatus" >
+    update confstatus
+    <set >
+      <if test="confstatus != null" >
+        confstatus = #{confstatus,jdbcType=CHAR},
+      </if>
+      <if test="confdes != null" >
+        confdes = #{confdes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.justcs.entity.ConfStatus" >
+    update confstatus
+    set confstatus = #{confstatus,jdbcType=CHAR},
+      confdes = #{confdes,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

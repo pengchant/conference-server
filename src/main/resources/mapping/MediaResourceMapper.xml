@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.justcs.mapper.MediaResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.justcs.entity.MediaResource" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="mediaurl" property="mediaurl" jdbcType="VARCHAR" />
+    <result column="uploaderid" property="uploaderid" jdbcType="CHAR" />
+    <result column="uploader" property="uploader" jdbcType="CHAR" />
+    <result column="uploadtime" property="uploadtime" jdbcType="TIMESTAMP" />
+    <result column="confid" property="confid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, description, mediaurl, uploaderid, uploader, uploadtime, confid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mediaresource
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mediaresource
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.justcs.entity.MediaResource" >
+    insert into mediaresource (id, description, mediaurl, 
+      uploaderid, uploader, uploadtime, 
+      confid)
+    values (#{id,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{mediaurl,jdbcType=VARCHAR}, 
+      #{uploaderid,jdbcType=CHAR}, #{uploader,jdbcType=CHAR}, #{uploadtime,jdbcType=TIMESTAMP}, 
+      #{confid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.justcs.entity.MediaResource" >
+    insert into mediaresource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="mediaurl != null" >
+        mediaurl,
+      </if>
+      <if test="uploaderid != null" >
+        uploaderid,
+      </if>
+      <if test="uploader != null" >
+        uploader,
+      </if>
+      <if test="uploadtime != null" >
+        uploadtime,
+      </if>
+      <if test="confid != null" >
+        confid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaurl != null" >
+        #{mediaurl,jdbcType=VARCHAR},
+      </if>
+      <if test="uploaderid != null" >
+        #{uploaderid,jdbcType=CHAR},
+      </if>
+      <if test="uploader != null" >
+        #{uploader,jdbcType=CHAR},
+      </if>
+      <if test="uploadtime != null" >
+        #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confid != null" >
+        #{confid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.justcs.entity.MediaResource" >
+    update mediaresource
+    <set >
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="mediaurl != null" >
+        mediaurl = #{mediaurl,jdbcType=VARCHAR},
+      </if>
+      <if test="uploaderid != null" >
+        uploaderid = #{uploaderid,jdbcType=CHAR},
+      </if>
+      <if test="uploader != null" >
+        uploader = #{uploader,jdbcType=CHAR},
+      </if>
+      <if test="uploadtime != null" >
+        uploadtime = #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confid != null" >
+        confid = #{confid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.justcs.entity.MediaResource" >
+    update mediaresource
+    set description = #{description,jdbcType=VARCHAR},
+      mediaurl = #{mediaurl,jdbcType=VARCHAR},
+      uploaderid = #{uploaderid,jdbcType=CHAR},
+      uploader = #{uploader,jdbcType=CHAR},
+      uploadtime = #{uploadtime,jdbcType=TIMESTAMP},
+      confid = #{confid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
