@@ -14,6 +14,7 @@ import com.justcs.view.MeetingRoomView;
 import com.justcs.view.OrderConfView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -297,28 +298,34 @@ public class OrderConfController {
         meetingRoom.setRoomname(newRoomForm.getName());
         meetingRoom.setMaxcontain(newRoomForm.getSeats());
         // 下面遍历硬件条件
+        meetingRoom.setAircondition((short) 0);
+        meetingRoom.setProjector((short) 0);
+        meetingRoom.setMicrophone((short) 0);
+        meetingRoom.setStereo((short) 0);
+        meetingRoom.setPodium((short) 0);
+        meetingRoom.setLightequ((short) 0);
         for (String condition : newRoomForm.getHardcondition()) {
-            switch (condition) {
-                case "空调":
-                    meetingRoom.setAircondition((short) 1);
-                    break;
-                case "投影仪":
-                    meetingRoom.setProjector((short) 1);
-                    break;
-                case "麦克风":
-                    meetingRoom.setMicrophone((short) 1);
-                    break;
-                case "音响":
-                    meetingRoom.setStereo((short) 1);
-                    break;
-                case "演讲台":
-                    meetingRoom.setPodium((short) 1);
-                    break;
-                case "照明设备":
-                    meetingRoom.setLightequ((short) 1);
-                    break;
-                default:
-                    break;
+            if (StringUtils.equals(condition, "空调")) {
+                meetingRoom.setAircondition((short) 1);
+            }
+
+            if (StringUtils.equals(condition, "投影仪")) {
+                meetingRoom.setProjector((short) 1);
+            }
+            if (StringUtils.equals(condition, "麦克风")) {
+                meetingRoom.setMicrophone((short) 1);
+            }
+
+            if (StringUtils.equals(condition, "音响")) {
+                meetingRoom.setStereo((short) 1);
+            }
+
+            if (StringUtils.equals(condition, "演讲台")) {
+                meetingRoom.setPodium((short) 1);
+            }
+
+            if (StringUtils.equals(condition, "照明设备")) {
+                meetingRoom.setLightequ((short) 1);
             }
         }
         // 调用录入会议室的方法
