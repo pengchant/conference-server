@@ -114,11 +114,11 @@ public class RecordConfController {
             resource.put("semester", result.getBasicConfInfoView().getSemestername());
             resource.put("weeksno", result.getConfCollectBasicInfoView().getMeetweeks());
             resource.put("leadername", result.getConfCollectBasicInfoView().getCollegeleader());
-            String parentpath = ResourceUtils.getURL("classpath:").getPath();
-            resource.put("myimg", new PictureRenderData(
-                    100,
-                    120,
-                    parentpath + "template/bg.png"));
+//            String parentpath = ResourceUtils.getURL("classpath:").getPath();
+//            resource.put("myimg", new PictureRenderData(
+//                    500,
+//                    520,
+//                    parentpath + "template/bg.png"));
             String timestr = result.getConfCollectBasicInfoView().getColltime();
             resource.put("cfdatetime", sdf2.format(sdf.parse(timestr)));
             // 上次会议

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.ws.rs.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -280,6 +281,63 @@ public class OrderConfController {
             return JSONResult.ok(meetingRoom);
         }
         return JSONResult.errorMsg("对不起会议室录入失败!");
+    }
+
+    /**
+     * 修改会议室
+     * @param newRoomForm
+     * @return
+     */
+    @ApiOperation(value = "新增会议室")
+    @PostMapping("/modifyRoom")
+    public JSONResult modifyRoom(@RequestBody @Valid ModifyRoomForm newRoomForm) {
+        MeetingRoom meetingRoom = new MeetingRoom();
+        meetingRoom.setId(Integer.valueOf(newRoomForm.getRoomid()));
+        meetingRoom.setDepartment(newRoomForm.getDepartment());
+        meetingRoom.setRoomname(newRoomForm.getName());
+        meetingRoom.setMaxcontain(newRoomForm.getSeats());
+        // 下面遍历硬件条件
+        for (String condition : newRoomForm.getHardcondition()) {
+            switch (condition) {
+                case "空调":
+                    meetingRoom.setAircondition((short) 1);
+                    break;
+                case "投影仪":
+                    meetingRoom.setProjector((short) 1);
+                    break;
+                case "麦克风":
+                    meetingRoom.setMicrophone((short) 1);
+                    break;
+                case "音响":
+                    meetingRoom.setStereo((short) 1);
+                    break;
+                case "演讲台":
+                    meetingRoom.setPodium((short) 1);
+                    break;
+                case "照明设备":
+                    meetingRoom.setLightequ((short) 1);
+                    break;
+                default:
+                    break;
+            }
+        }
+        // 调用录入会议室的方法
+        int flag = confOrderService.modifyMeetingRoom(meetingRoom);
+        return flag>0?JSONResult.ok("修改会议室成功"):JSONResult.errorMsg("对不起修改会议室失败!");
+    }
+
+
+    /**
+     * 删除会议室
+     * @return
+     */
+    @ApiOperation(value = "删除会议室")
+    @PostMapping("/{roomid}/removeConfRoom")
+    public JSONResult removeConfRoom (@PathVariable(required = true, name = "roomid")Integer roomid) {
+        MeetingRoom meetingRoom = new MeetingRoom();
+        meetingRoom.setId(roomid);
+        int flag = confOrderService.removeConfRoom(meetingRoom);
+        return flag>0?JSONResult.ok("删除会议室成功"):JSONResult.errorMsg("删除会议室失败!");
     }
 
 

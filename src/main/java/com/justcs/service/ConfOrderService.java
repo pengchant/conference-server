@@ -172,6 +172,33 @@ public class ConfOrderService {
         return null;
     }
 
+    /**
+     * 修改会议室
+     * @param meetingRoom
+     * @return
+     */
+    @Transactional
+    public int modifyMeetingRoom(MeetingRoom meetingRoom) {
+        if (meetingRoom != null) {
+            return meetingRoomMapper.updateByPrimaryKeySelective(meetingRoom);
+        }
+        return 0;
+    }
+
+    /**
+     * 删除会议室
+     * @param meetingRoom
+     * @return
+     */
+    @Transactional
+    public int removeConfRoom(MeetingRoom meetingRoom) {
+        if (meetingRoom!=null) {
+            return meetingRoomMapper.deleteByPrimaryKey(meetingRoom.getId());
+        }
+        return 0;
+    }
+
+
 
     /**
      * 查询已经预约的会议
