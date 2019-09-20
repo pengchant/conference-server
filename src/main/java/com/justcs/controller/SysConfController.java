@@ -209,6 +209,96 @@ public class SysConfController {
     //////////////////////////////////////////////////////////
 
     /**
+     * 分页查询所有职务信息
+     *
+     * @return
+     */
+    @PostMapping("/queryDutys")
+    @ApiOperation(value = "分页查询所有职位信息")
+    public JSONResult queryDutys(@RequestBody @Valid PagedQueryForm<Duty_c> param) {
+        try {
+            PageInfo<Duty> result = sysConfService.queryPagedDuty(param);
+            return JSONResult.ok(result);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw  e;
+        }
+    }
+
+    /**
+     * 新增职务
+     * @param duty
+     * @return
+     */
+    @PostMapping("/addDuty")
+    @ApiOperation(value = "新增职务")
+    public JSONResult addDuty(@RequestBody(required = true) Duty duty) {
+        try {
+            int affected = sysConfService.addDuty(duty);
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("录入失败!");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * 删除职务信息
+     * @param dutyid
+     * @return
+     */
+    @PostMapping("/rmDuty/{dutyid}")
+    @ApiOperation(value = "删除职务信息")
+    public JSONResult rmDuty(@PathVariable("dutyid") int dutyid){
+        Duty duty = new Duty();
+        duty.setId(dutyid);
+        try {
+            int affected = sysConfService.removeDuty(duty);
+            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * 批量删除职务信息
+     * @param arrs
+     * @return
+     */
+    @PostMapping("/bhrmduty")
+    @ApiOperation(value = "批量删除职务信息")
+    public JSONResult bhrmduty(@RequestBody(required = true) int[] arrs) {
+        try {
+            int affected = sysConfService.batchRemoveDuty(arrs);
+            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * 修改职务信息
+     * @param duty
+     * @return
+     */
+    @PostMapping("/mdduty")
+    @ApiOperation(value = "修改职务信息")
+    public JSONResult mdduty(@RequestBody(required = true) Duty duty) {
+        try {
+            int affected = sysConfService.modifyDuty(duty);
+            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
+    }
+
+
+    //////////////////////////////////////////////////////////
+
+    /**
      * 分页查询所有部门信息
      *
      * @return

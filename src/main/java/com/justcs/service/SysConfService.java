@@ -24,6 +24,9 @@ public class SysConfService {
     private MpositionMapper mpositionMapper;
 
     @Autowired
+    private DutyMapper dutyMapper;
+
+    @Autowired
     private DepartmentMapper departmentMapper;
 
     @Autowired
@@ -176,6 +179,79 @@ public class SysConfService {
         }
         return 0;
     }
+
+    //////////////////////////////////////////////////////////
+
+    /**
+     * 分页查询所有的职位信息
+     *
+     * @return
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public PageInfo<Duty> queryPagedDuty(PagedQueryForm<Duty_c> query) {
+        if(query!=null) {
+            PageHelper.startPage(query.getPage(), query.getPagesize());
+            PageInfo<Duty> dutyPageInfo = new PageInfo<Duty>(
+                    dutyMapper.selectDuty(query.getSearch().getDutyname(), query.getSort(), query.getOrder())
+            );
+            return dutyPageInfo;
+        }
+        return null;
+    }
+
+
+    /**
+     * 添加职位信息
+     * @param duty
+     * @return
+     */
+    @Transactional
+    public int addDuty(Duty duty) {
+        if (duty != null) {
+            return dutyMapper.insertSelective(duty);
+        }
+        return 0;
+    }
+
+    /**
+     * 根据主键修改职位
+     * @param duty
+     * @return
+     */
+    @Transactional
+    public int modifyDuty(Duty duty) {
+        if (duty!=null && duty.getId() != null) {
+            return dutyMapper.updateByPrimaryKeySelective(duty);
+        }
+        return 0;
+    }
+
+    /**
+     * 根据主键删除职务
+     * @param duty
+     * @return
+     */
+    @Transactional
+    public int removeDuty(Duty duty) {
+        if (duty!=null && duty.getId() != null) {
+            return dutyMapper.deleteByPrimaryKey(duty.getId());
+        }
+        return 0;
+    }
+
+    /**
+     * 批量删除职务信息
+     * @param ids
+     * @return
+     */
+    @Transactional
+    public int batchRemoveDuty(int[] ids) {
+        if(ids!=null && ids.length>0) {
+            return dutyMapper.batchDeleteDuty(ids);
+        }
+        return 0;
+    }
+
 
 
     ///////////////////////////////////////////////////////////
