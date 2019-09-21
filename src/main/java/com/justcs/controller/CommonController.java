@@ -1,16 +1,16 @@
 package com.justcs.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.justcs.entity.Account;
 import com.justcs.entity.Userinfo;
-import com.justcs.form.LoginForm;
-import com.justcs.form.UserRegistForm;
-import com.justcs.form.UsrAttendForm;
+import com.justcs.form.*;
 import com.justcs.mapper.*;
 import com.justcs.service.CommonService;
 import com.justcs.service.ConfOrderService;
 import com.justcs.utils.*;
 import com.justcs.view.CurDepUsrView;
+import com.justcs.view.UsrInfoView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
@@ -60,6 +60,9 @@ public class CommonController {
 
     @Autowired
     private ConfOrderService confOrderService;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
     /**
      * 查询所有的职位
@@ -127,6 +130,17 @@ public class CommonController {
     @PostMapping("/allduty")
     public JSONResult queryallallduty() {
         return JSONResult.ok(dutyMapper.selectAllDutys());
+    }
+
+    /**
+     * 查询所有角色
+     *
+     * @return
+     */
+    @ApiOperation(value = "查询所有角色")
+    @PostMapping("/allRoles")
+    public JSONResult queryallRoles() {
+        return JSONResult.ok(roleMapper.selectAllRoles());
     }
 
 
@@ -239,5 +253,21 @@ public class CommonController {
             return JSONResult.ok(curDepUsrViews);
         }
         return JSONResult.errorMsg("查询本部门用户信息失败!");
+    }
+
+    /**
+     * 分页查询用户的信息
+     * @return
+     */
+    @ApiOperation(value = "分页查询用户的数据")
+    @PostMapping(value = "/getusrinfoview")
+    public JSONResult getusrinfoview(@RequestBody @Valid PagedQueryForm<UsrInfo_c> param) {
+        try {
+            PageInfo<UsrInfoView> result = commonService.queryPagedUsrinfo(param);
+            return JSONResult.ok(result);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw  e;
+        }
     }
 }

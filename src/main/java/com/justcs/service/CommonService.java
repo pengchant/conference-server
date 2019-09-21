@@ -1,9 +1,15 @@
 package com.justcs.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.justcs.entity.Account;
 import com.justcs.entity.Attendes;
+import com.justcs.entity.Semester;
 import com.justcs.entity.Userinfo;
+import com.justcs.form.PagedQueryForm;
+import com.justcs.form.UsrInfo_c;
 import com.justcs.mapper.*;
+import com.justcs.view.UsrInfoView;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,6 +81,23 @@ public class CommonService {
     }
 
 
-
-
+    /**
+     * 分页查询用户的信息
+     * @param query
+     * @return
+     */
+    public PageInfo<UsrInfoView> queryPagedUsrinfo(PagedQueryForm<UsrInfo_c> query) {
+        if(query!=null) {
+            PageHelper.startPage(query.getPage(), query.getPagesize());
+            PageInfo<UsrInfoView> semesterPageInfo = new PageInfo<>(
+                    userinfoMapper.selectUsrInfoView(
+                            query.getSearch().getDepname(),
+                            query.getSearch().getUsrname(),
+                            query.getSort(),
+                            query.getOrder())
+            );
+            return semesterPageInfo;
+        }
+        return null;
+    }
 }
