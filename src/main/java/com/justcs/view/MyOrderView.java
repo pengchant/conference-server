@@ -17,6 +17,16 @@ public class MyOrderView {
 
     private String endtime;
 
+    private String recorderid;
+
+    public String getRecorderid() {
+        return recorderid;
+    }
+
+    public void setRecorderid(String recorderid) {
+        this.recorderid = recorderid;
+    }
+
     public Integer getConfid() {
         return confid;
     }

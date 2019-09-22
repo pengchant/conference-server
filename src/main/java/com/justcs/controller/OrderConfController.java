@@ -449,4 +449,16 @@ public class OrderConfController {
     }
 
 
+    /**
+     * 标记会议正在进行
+     * @param confid
+     * @return
+     */
+    @ApiOperation(value = "修改会议状态标记为进行中的会议")
+    @PostMapping("/{confid}/flagInConference")
+    public JSONResult flagInConference(@PathVariable(value = "confid", required = true) Integer confid) {
+        int flag = confOrderService.updateConfIn(confid);
+        return flag>0? JSONResult.ok("修改成功"):JSONResult.errorMsg("对不起修改失败");
+    }
+
 }

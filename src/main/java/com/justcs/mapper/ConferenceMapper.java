@@ -66,7 +66,8 @@ public interface ConferenceMapper {
                     "q.starttime,\n" +
                     "q.endtime,\n" +
                     "q.confstatusid as statusid,\n" +
-                    "q.confstatus as confstatus\n" +
+                    "q.confstatus as confstatus,\n" +
+                    "q.recorderid as recorderid \n" +
                     "from (\n" +
                     "\tSELECT id as attid,\n" +
                     "\tworkerid,\n" +
@@ -84,11 +85,12 @@ public interface ConferenceMapper {
                     "\t\tr.starttime,\n" +
                     "\t\tr.endtime,\n" +
                     "\t\tc.confstatusid,\n" +
-                    "\t\ts.confstatus\n" +
+                    "\t\ts.confstatus,\n" +
+                    "\t\tc.recorderid\n" +
                     "\tfrom conference c\n" +
                     "\t\tjoin confmeetingroom r on (c.id = r.confid)\n" +
                     "\t\tjoin confstatus s on (c.confstatusid= s.id)\n" +
-                    "\twhere\n" +
+                    "\twhere (c.confstatusid='1' or c.confstatusid='2' or c.confstatusid='3') and \n" + // 查询已申请和待开始的会议
                     "\t\tr.starttime > now()\n" +
                     ") q on (q.confid = p.confid)\n" +
                     "order by q.starttime asc",
@@ -351,7 +353,7 @@ public interface ConferenceMapper {
             "and c.confstatusid=#{statusid}",
             "</when>",
             "<otherwise>",
-            "and (c.confstatusid='1' or c.confstatusid='2' or c.confstatusid='101')",
+            "and (c.confstatusid='1' or c.confstatusid='2' or c.confstatusid='3' or c.confstatusid='101')",
             "</otherwise>",
             "</choose>",
             // 申请人员

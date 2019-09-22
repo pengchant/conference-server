@@ -23,6 +23,9 @@ public class UserRegistForm {
     @ApiModelProperty(value = "选择职位")
     private List<Integer> posselected;
 
+    @ApiModelProperty(value = "选择职务")
+    private List<Integer> dutyselected;
+
     @ApiModelProperty(value = "密码")
     @NotBlank(message = "密码不能为空")
     private String password;
@@ -31,6 +34,13 @@ public class UserRegistForm {
     @NotBlank(message = "确认密码不能为空")
     private String confirmpass;
 
+    public List<Integer> getDutyselected() {
+        return dutyselected;
+    }
+
+    public void setDutyselected(List<Integer> dutyselected) {
+        this.dutyselected = dutyselected;
+    }
 
     public String getWorkername() {
         return workername;

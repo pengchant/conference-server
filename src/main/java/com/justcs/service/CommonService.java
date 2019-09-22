@@ -58,17 +58,24 @@ public class CommonService {
      * @return
      */
     @Transactional
-    public boolean registUser(Account account, Userinfo userinfo, List<Integer> usrpos, List<Integer> usrdep) {
-        // 1.插入账户表
-        accountMapper.insertSelective(account);
-        // 2.插入用户信息表
-        userinfo.setAccid(account.getId());
-        userinfoMapper.insertSelective(userinfo);
-        // 3.录入用户职务(批量)
-        int affected_1 = usrPositionMapper.batchInsert(userinfo.getId(), usrpos);
-        // 4.录入用户所属部门表(批量)
-        int affected_2 = usrdepMapper.batchInsertUsrdep(userinfo.getId(), usrdep);
-        return true;
+    public boolean registUser(Account account, Userinfo userinfo, List<Integer> usrpos, List<Integer> usrdep, List<Integer> dutys) {
+        try {
+            // 1.插入账户表
+            accountMapper.insertSelective(account);
+            // 2.插入用户信息表
+            userinfo.setAccid(account.getId());
+            userinfoMapper.insertSelective(userinfo);
+            // 3.录入用户职务(批量)
+            usrPositionMapper.batchInsert(userinfo.getId(), usrpos);
+            // 4.录入用户所属部门表(批量)
+            usrdepMapper.batchInsertUsrdep(userinfo.getId(), usrdep);
+            // 5.录入用户职位表(批量)
+            usrDutyMapper.batchInsert(userinfo.getId(), dutys);
+            return true;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return false;
     }
 
     /**

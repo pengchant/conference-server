@@ -34,13 +34,13 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: xiaopeng
-    timeout: 50000ms
+    timeout: 5000ms
     jedis:
       pool:
         max-idle: 8
         min-idle: 0
         max-active: 8
-        max-wait: 50000ms
+        max-wait: 5000ms
 
   servlet:
     multipart:

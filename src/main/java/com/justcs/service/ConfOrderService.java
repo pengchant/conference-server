@@ -372,4 +372,19 @@ public class ConfOrderService {
     }
 
 
+    /**
+     * 标记会议正在进行中
+     * @param confid
+     * @return
+     */
+    @Transactional
+    public int updateConfIn(Integer confid) {
+        if(confid!=null) {
+            ConferenceWithBLOBs conference = conferenceMapper.selectByPrimaryKey(confid);
+            conference.setConfstatusid(3); // 设置进行中
+            return conferenceMapper.updateByPrimaryKeySelective(conference);
+        }
+        return 0;
+    }
+
 }

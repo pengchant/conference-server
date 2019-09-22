@@ -166,8 +166,10 @@ public class CommonController {
         List<Integer> postions = userRegistForm.getPosselected();
         // 用户所属部门
         List<Integer> departments = userRegistForm.getDepselected();
+        // 用户职务
+        List<Integer> dutys = userRegistForm.getDutyselected();
         try {
-            commonService.registUser(account, userinfo, postions, departments);
+            commonService.registUser(account, userinfo, postions, departments, dutys);
             return JSONResult.ok("恭喜你注册成功!");
         } catch (Exception e) {
             logger.info("注册用户信息异常");
