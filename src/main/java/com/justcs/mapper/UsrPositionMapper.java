@@ -1,6 +1,7 @@
 package com.justcs.mapper;
 
 import com.justcs.entity.UsrPositionKey;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,4 +29,15 @@ public interface UsrPositionMapper {
             "</script>"
     })
     int batchInsert(@Param("usrid") Integer usrid, @Param("positions") List<Integer> positions);
+
+
+    /**
+     * 删除用户的所有职位
+     * @param usrid
+     * @return
+     */
+    @Delete({
+            "delete from usrposition where usrid = #{usrid}"
+    })
+    int deleteUsrPositions(@Param("usrid")Integer usrid);
 }

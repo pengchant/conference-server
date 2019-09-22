@@ -2,8 +2,7 @@ package com.justcs.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
-import com.justcs.entity.Account;
-import com.justcs.entity.Userinfo;
+import com.justcs.entity.*;
 import com.justcs.form.*;
 import com.justcs.mapper.*;
 import com.justcs.service.CommonService;
@@ -21,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -269,5 +269,36 @@ public class CommonController {
             logger.error(e.getMessage());
             throw  e;
         }
+    }
+
+    /**
+     * 修改用户表单信息
+     * @param modifyUsrInfoForm
+     * @return
+     */
+    @ApiOperation(value = "修改用户信息")
+    @PostMapping(value = "/modifyUsrInfoView")
+    public JSONResult modifyUsrInfoView(@RequestBody @Valid ModifyUsrInfoForm modifyUsrInfoForm) {
+        try {
+            // 封装Account实体
+            Account account = new Account();
+            account.setId(modifyUsrInfoForm.getAccid());
+            account.setEmail(modifyUsrInfoForm.getEmail());
+            account.setPhonenum(modifyUsrInfoForm.getPhonenum());
+            // 封装Usrinfo实体
+            Userinfo userinfo = new Userinfo();
+            userinfo.setId(modifyUsrInfoForm.getUsrid());
+            userinfo.setUsrname(modifyUsrInfoForm.getUsrname());
+            // 调用修改方法
+            int flag = commonService.modifyUsrInfo(account, userinfo,
+                    modifyUsrInfoForm.getDepartments(),
+                    modifyUsrInfoForm.getPositions(),
+                    modifyUsrInfoForm.getDutys(),
+                    modifyUsrInfoForm.getRoles());
+            return flag>0? JSONResult.ok("修改成功"):JSONResult.errorMsg("修改失败");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return JSONResult.errorMsg("对不起修改用户信息失败，请稍后重试!");
     }
 }

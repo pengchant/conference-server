@@ -1,6 +1,7 @@
 package com.justcs.mapper;
 
 import com.justcs.entity.UsrdepKey;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +30,15 @@ public interface UsrdepMapper {
             "</script>"
     })
     int batchInsertUsrdep(@Param("usrid")Integer usrid, @Param("departments") List<Integer> departments);
+
+    /**
+     * 删除用户的所有部门信息
+     * @param usrid
+     * @return
+     */
+    @Delete({
+        "delete from usrdep where usrid = #{usrid}"
+    })
+    int deleteUsrDeps(@Param("usrid")Integer usrid);
+
 }
