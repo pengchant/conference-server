@@ -46,7 +46,6 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        logger.info("*********jwtfilter-登录认证***********");
         if (isLoginAttempt(request, response)) {
             try {
                 executeLogin(request, response);
@@ -69,7 +68,6 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) {
-        logger.info("************executeLogin************");
         try {
             HttpServletRequest httpreq = (HttpServletRequest) request;
             String token = httpreq.getHeader(JwtFilter.LOGIN_SIGN);
@@ -77,7 +75,6 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             // 提交给realm进行登录，如果错误会抛出异常并被捕获
             getSubject(request, response).login(jwtToken);
             // 如果登录成功查看是否需要重新刷新token
-
         } catch (AuthenticationException e) {
             throw new AuthenticationException("验证登录逻辑失败");
         }

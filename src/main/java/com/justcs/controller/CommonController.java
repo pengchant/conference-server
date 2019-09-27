@@ -190,17 +190,16 @@ public class CommonController {
         logger.info("--登录-- username:" + loginForm.getAccount());
         Subject subject = SecurityUtils.getSubject();
         try {
-            JwtToken token = new JwtToken(JwtUtil.sign(loginForm.getAccount(), loginForm.getPassword()));
+            JwtToken token = new JwtToken(JwtUtil.sign(loginForm.getAccount(), "6666")); // 这里改成6666密码是由于本项目通过平台登录所以密码固定
             subject.login(token);
-            // 将token => 用户账户信息(json格式) 放到redis中 30min后失效
+            // 将token => 用户账户信息(json格式) 放到redis中 4h后失效
             Account account = accountMapper.selectByAccount(loginForm.getAccount());
             Userinfo userinfo = accountMapper.selectByUsername(String.valueOf(account.getId()));
             String userinfostr = new Gson().toJson(userinfo);
-            REDIS.set(token.getCredentials().toString(), userinfostr, 12*60*60*1); // 设置12个小时
+            REDIS.set(token.getCredentials().toString(), userinfostr, 4*60*60*1); // 设置4个小时
             // 将token返回给前端
             return JSONResult.ok(token.getCredentials());
         } catch (Exception e) {
-            logger.error(e.getMessage());
             return JSONResult.errorMsg("对不起您的账号或者密码输入错误");
         }
     }
@@ -303,4 +302,21 @@ public class CommonController {
         }
         return JSONResult.errorMsg("对不起修改用户信息失败，请稍后重试!");
     }
+
+    /**
+     * 查询用户是否已在系统中注册过
+     * @return
+     */
+    @ApiOperation("adapterHasRegisted")
+    @PostMapping(value = "/{workerid}/adapterHasRegisted")
+    public JSONResult adapterHasRegisted(@PathVariable(value = "workerid")String workerid) {
+        Account account = accountMapper.selectByAccount(workerid);
+        if(account!=null) {
+            return JSONResult.ok("1");
+        }
+        return JSONResult.ok("0");
+    }
+
+
+
 }
