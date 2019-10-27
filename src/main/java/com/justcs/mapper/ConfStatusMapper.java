@@ -42,7 +42,9 @@ public interface ConfStatusMapper {
             "</if>",
             "</script>"
     })
-    List<ConfStatus> selectConfStatus(@Param("confstatus") String confstatus, @Param("sortby") String sortby, @Param("order") String order);
+    List<ConfStatus> selectConfStatus(@Param("confstatus") String confstatus,
+                                      @Param("sortby") String sortby,
+                                      @Param("order") String order);
 
 
     /**

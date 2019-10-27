@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 集成学校平台认证器
  */
-@Configuration
+//@Configuration
 public class SOSConfig {
 
     /**

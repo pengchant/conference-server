@@ -41,12 +41,13 @@ public class SysConfController {
             return JSONResult.ok(result);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw  e;
+            throw e;
         }
     }
 
     /**
      * 新增学期
+     *
      * @param semester
      * @return
      */
@@ -64,17 +65,18 @@ public class SysConfController {
 
     /**
      * 删除学期信息
+     *
      * @param semesterid
      * @return
      */
     @PostMapping("/rmSemester/{semesterid}")
     @ApiOperation(value = "删除学期信息")
-    public JSONResult removeSemester(@PathVariable("semesterid") int semesterid){
+    public JSONResult removeSemester(@PathVariable("semesterid") int semesterid) {
         Semester semester = new Semester();
         semester.setId(semesterid);
         try {
             int affected = sysConfService.removeSemester(semester);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -83,6 +85,7 @@ public class SysConfController {
 
     /**
      * 批量删除学期信息
+     *
      * @param arrs
      * @return
      */
@@ -91,7 +94,7 @@ public class SysConfController {
     public JSONResult batchRemoveSemester(@RequestBody(required = true) int[] arrs) {
         try {
             int affected = sysConfService.batchRemoveSemester(arrs);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -100,6 +103,7 @@ public class SysConfController {
 
     /**
      * 修改学期信息
+     *
      * @param semester
      * @return
      */
@@ -108,7 +112,7 @@ public class SysConfController {
     public JSONResult mdsemester(@RequestBody(required = true) Semester semester) {
         try {
             int affected = sysConfService.modifySemester(semester);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -132,12 +136,13 @@ public class SysConfController {
             return JSONResult.ok(result);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw  e;
+            throw e;
         }
     }
 
     /**
      * 新增职务
+     *
      * @param mposition
      * @return
      */
@@ -155,17 +160,18 @@ public class SysConfController {
 
     /**
      * 删除职务信息
+     *
      * @param positionid
      * @return
      */
     @PostMapping("/rmPosition/{positionid}")
     @ApiOperation(value = "删除职务信息")
-    public JSONResult removePosition(@PathVariable("positionid") int positionid){
+    public JSONResult removePosition(@PathVariable("positionid") int positionid) {
         Mposition mposition = new Mposition();
         mposition.setId(positionid);
         try {
             int affected = sysConfService.removePosition(mposition);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -174,6 +180,7 @@ public class SysConfController {
 
     /**
      * 批量删除职务信息
+     *
      * @param arrs
      * @return
      */
@@ -182,7 +189,7 @@ public class SysConfController {
     public JSONResult batchRemovePosition(@RequestBody(required = true) int[] arrs) {
         try {
             int affected = sysConfService.batchRemovePosition(arrs);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -191,6 +198,7 @@ public class SysConfController {
 
     /**
      * 修改职务信息
+     *
      * @param mposition
      * @return
      */
@@ -199,7 +207,7 @@ public class SysConfController {
     public JSONResult mdposition(@RequestBody(required = true) Mposition mposition) {
         try {
             int affected = sysConfService.modifyPosition(mposition);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -221,12 +229,13 @@ public class SysConfController {
             return JSONResult.ok(result);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw  e;
+            throw e;
         }
     }
 
     /**
      * 新增职务
+     *
      * @param duty
      * @return
      */
@@ -244,17 +253,18 @@ public class SysConfController {
 
     /**
      * 删除职务信息
+     *
      * @param dutyid
      * @return
      */
     @PostMapping("/rmDuty/{dutyid}")
     @ApiOperation(value = "删除职务信息")
-    public JSONResult rmDuty(@PathVariable("dutyid") int dutyid){
+    public JSONResult rmDuty(@PathVariable("dutyid") int dutyid) {
         Duty duty = new Duty();
         duty.setId(dutyid);
         try {
             int affected = sysConfService.removeDuty(duty);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -263,6 +273,7 @@ public class SysConfController {
 
     /**
      * 批量删除职务信息
+     *
      * @param arrs
      * @return
      */
@@ -271,7 +282,7 @@ public class SysConfController {
     public JSONResult bhrmduty(@RequestBody(required = true) int[] arrs) {
         try {
             int affected = sysConfService.batchRemoveDuty(arrs);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -280,6 +291,7 @@ public class SysConfController {
 
     /**
      * 修改职务信息
+     *
      * @param duty
      * @return
      */
@@ -288,7 +300,7 @@ public class SysConfController {
     public JSONResult mdduty(@RequestBody(required = true) Duty duty) {
         try {
             int affected = sysConfService.modifyDuty(duty);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -311,12 +323,13 @@ public class SysConfController {
             return JSONResult.ok(result);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw  e;
+            throw e;
         }
     }
 
     /**
      * 新增部门信息
+     *
      * @param department
      * @return
      */
@@ -334,17 +347,18 @@ public class SysConfController {
 
     /**
      * 删除部门信息
+     *
      * @param depid
      * @return
      */
     @PostMapping("/rmDepartment/{depid}")
     @ApiOperation(value = "删除职务信息")
-    public JSONResult rmDepartment(@PathVariable("depid") int depid){
+    public JSONResult rmDepartment(@PathVariable("depid") int depid) {
         Department department = new Department();
         department.setId(depid);
         try {
             int affected = sysConfService.removeDepartment(department);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -353,6 +367,7 @@ public class SysConfController {
 
     /**
      * 批量删除部门信息
+     *
      * @param arrs
      * @return
      */
@@ -361,7 +376,7 @@ public class SysConfController {
     public JSONResult bhrmdepartment(@RequestBody(required = true) int[] arrs) {
         try {
             int affected = sysConfService.batchRemoveDepartment(arrs);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -370,6 +385,7 @@ public class SysConfController {
 
     /**
      * 修改部门信息
+     *
      * @param department
      * @return
      */
@@ -378,7 +394,7 @@ public class SysConfController {
     public JSONResult mddepartment(@RequestBody(required = true) Department department) {
         try {
             int affected = sysConfService.modifyDepartment(department);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -401,12 +417,13 @@ public class SysConfController {
             return JSONResult.ok(result);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw  e;
+            throw e;
         }
     }
 
     /**
      * 新增会议级别信息
+     *
      * @param conflevel
      * @return
      */
@@ -424,17 +441,18 @@ public class SysConfController {
 
     /**
      * 删除会议级别信息
+     *
      * @param conflevelid
      * @return
      */
     @PostMapping("/rmConflevel/{conflevelid}")
     @ApiOperation(value = "删除会议级别信息")
-    public JSONResult rmConflevel(@PathVariable("conflevelid") int conflevelid){
+    public JSONResult rmConflevel(@PathVariable("conflevelid") int conflevelid) {
         Conflevel conflevel = new Conflevel();
         conflevel.setId(conflevelid);
         try {
             int affected = sysConfService.removeConflevel(conflevel);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -443,6 +461,7 @@ public class SysConfController {
 
     /**
      * 批量删除会议级别信息
+     *
      * @param arrs
      * @return
      */
@@ -451,7 +470,7 @@ public class SysConfController {
     public JSONResult bhrmconflevel(@RequestBody(required = true) int[] arrs) {
         try {
             int affected = sysConfService.batchRemoveConflevels(arrs);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -460,6 +479,7 @@ public class SysConfController {
 
     /**
      * 修改会议级别信息
+     *
      * @param conflevel
      * @return
      */
@@ -468,7 +488,7 @@ public class SysConfController {
     public JSONResult mdconflevel(@RequestBody(required = true) Conflevel conflevel) {
         try {
             int affected = sysConfService.modifyConfLevel(conflevel);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -476,6 +496,7 @@ public class SysConfController {
     }
 
     ///////////////////////////////////////////////////////////////////////
+
     /**
      * 分页查询所有会议属性信息
      *
@@ -489,12 +510,13 @@ public class SysConfController {
             return JSONResult.ok(result);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw  e;
+            throw e;
         }
     }
 
     /**
      * 新增会议属性信息
+     *
      * @param confAttributes
      * @return
      */
@@ -512,17 +534,18 @@ public class SysConfController {
 
     /**
      * 删除会议属性信息
+     *
      * @param confattrlid
      * @return
      */
     @PostMapping("/rmConfattr/{confattrlid}")
     @ApiOperation(value = "删除会议级别信息")
-    public JSONResult rmConfattr(@PathVariable("confattrlid") int confattrlid){
+    public JSONResult rmConfattr(@PathVariable("confattrlid") int confattrlid) {
         ConfAttributes confAttributes = new ConfAttributes();
         confAttributes.setId(confattrlid);
         try {
             int affected = sysConfService.removeConfattr(confAttributes);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -531,6 +554,7 @@ public class SysConfController {
 
     /**
      * 批量删除会议属性信息
+     *
      * @param arrs
      * @return
      */
@@ -539,7 +563,7 @@ public class SysConfController {
     public JSONResult bhrmconfattr(@RequestBody(required = true) int[] arrs) {
         try {
             int affected = sysConfService.batchRemoveConfattrs(arrs);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -548,6 +572,7 @@ public class SysConfController {
 
     /**
      * 修改会议属性信息
+     *
      * @param confAttributes
      * @return
      */
@@ -556,7 +581,7 @@ public class SysConfController {
     public JSONResult mdconfattr(@RequestBody(required = true) ConfAttributes confAttributes) {
         try {
             int affected = sysConfService.modifyConfattr(confAttributes);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -565,6 +590,7 @@ public class SysConfController {
 
 
     ///////////////////////////////////////////////////////////////
+
     /**
      * 分页查询所有会议状态信息
      *
@@ -578,12 +604,13 @@ public class SysConfController {
             return JSONResult.ok(result);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw  e;
+            throw e;
         }
     }
 
     /**
      * 新增会议状态信息
+     *
      * @param confStatus
      * @return
      */
@@ -601,17 +628,18 @@ public class SysConfController {
 
     /**
      * 删除会议状态信息
+     *
      * @param confstsid
      * @return
      */
     @PostMapping("/rmConfsts/{confstsid}")
     @ApiOperation(value = "删除会议状态信息")
-    public JSONResult rmConfsts(@PathVariable("confstsid") int confstsid){
+    public JSONResult rmConfsts(@PathVariable("confstsid") int confstsid) {
         ConfStatus confStatus = new ConfStatus();
         confStatus.setId(confstsid);
         try {
             int affected = sysConfService.removeConfsts(confStatus);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -620,6 +648,7 @@ public class SysConfController {
 
     /**
      * 批量删除会议状态信息
+     *
      * @param arrs
      * @return
      */
@@ -628,7 +657,7 @@ public class SysConfController {
     public JSONResult bhrmconfsts(@RequestBody(required = true) int[] arrs) {
         try {
             int affected = sysConfService.batchRemoveConfsts(arrs);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("批量删除失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
@@ -637,6 +666,7 @@ public class SysConfController {
 
     /**
      * 修改会议状态信息
+     *
      * @param confStatus
      * @return
      */
@@ -645,15 +675,54 @@ public class SysConfController {
     public JSONResult mdconfsts(@RequestBody(required = true) ConfStatus confStatus) {
         try {
             int affected = sysConfService.modifyConfsts(confStatus);
-            return affected > 0? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
+            return affected > 0 ? JSONResult.ok() : JSONResult.errorMsg("修改失败!");
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
         }
     }
 
+    /**
+     * 查询所有的二级部门
+     */
+    @PostMapping("/queryAllSecondDep")
+    @ApiOperation(value = "查询所有的二级部门")
+    public JSONResult queryAllSecondDep(@RequestBody PagedQueryForm<UsrSecDep_c> param) {
+        return JSONResult.ok(sysConfService.queryChildDep(param));
+    }
 
+    /**
+     * 删除二级部门
+     *
+     * @return
+     */
+    @PostMapping("/{childid}/removeChildDep")
+    @ApiOperation(value = "删除二级部门")
+    public JSONResult removeChildDep(@PathVariable(value = "childid", required = true) String childId) {
+        Depchildrens depchildrens = new Depchildrens();
+        depchildrens.setId(Integer.valueOf(childId));
+        boolean result = sysConfService.delChildDep(depchildrens);
+        return result ? JSONResult.ok() : JSONResult.errorMsg("删除二级部门失败");
+    }
 
+    /**
+     * 更新二级部门的的信息
+     *
+     * @return
+     */
+    @PostMapping("/updateChildDep")
+    @ApiOperation(value = "更新二级部门的信息")
+    public JSONResult updateChildDep(@RequestBody Depchildrens depchildrens) {
+        boolean result = sysConfService.updateSecondDep(depchildrens);
+        return result ? JSONResult.ok() : JSONResult.errorMsg("对不起更新二级部门失败");
+    }
+
+    @PostMapping("/addsecdep")
+    @ApiOperation(value = "添加二级部门")
+    public JSONResult addSecdep(@RequestBody Depchildrens depchildrens) {
+        boolean result = sysConfService.adddepSec(depchildrens) > 0;
+        return result ? JSONResult.ok() : JSONResult.errorMsg("添加二级部门失败");
+    }
 
 }
 

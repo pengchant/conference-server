@@ -10,13 +10,13 @@ spring:
     # 本地测试环境
     #url: jdbc:mysql://123.207.2.127:3306/cloudconference?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
     # 线上测试环境
-    #url: jdbc:mysql://localhost:3306/cloudconference?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/cloudconference?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
     # 生产环境
-    url: jdbc:mysql://202.195.195.118:3306/cloudconference?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+    #url: jdbc:mysql://202.195.195.118:3306/cloudconference?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
     username: root
-    #password: root
+    password: root
     #password: xzit_Cp$Yz_0310_just
-    password: 8ucmfy5G
+    #password: 8ucmfy5G
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver

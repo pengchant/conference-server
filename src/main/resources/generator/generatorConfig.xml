@@ -13,9 +13,9 @@
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://123.207.2.127/cloudconference"
+                        connectionURL="jdbc:mysql://localhost/cloudconference"
                         userId="root"
-                        password="xzit_Cp$Yz_0310_just">
+                        password="root">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -230,6 +230,18 @@
         <!--enableDeleteByExample="false" enableSelectByExample="false"-->
         <!--selectByExampleQueryId="false">-->
         <!--</table>-->
+
+        <!--<table tableName="depchildrens" domainObjectName="Depchildrens"-->
+        <!--enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <table tableName="usrsecdep" domainObjectName="Usrsecdep"
+        enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        </table>
 
     </context>
 </generatorConfiguration>
