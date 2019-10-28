@@ -68,11 +68,18 @@ public interface UserinfoMapper {
             "</foreach>",
             ") t on (u.accid = t.usrid)",
             "</if>",
+
+            // 用户名
+            "<if test='usrname!=null and usrname!=&apos;&apos;'>",
+            " where u.usrname like CONCAT(CONCAT('%', #{usrname}), '%')",
+            "</if>",
+
             "</script>"
     })
     List<UserSelectView> selectUsrSelect(@Param("depid") Integer depid,
                                          @Param("positions") Integer[] positions,
-                                         @Param("dutys") Integer[] dutys);
+                                         @Param("dutys") Integer[] dutys,
+                                         @Param("usrname") String usrname);
 
     /**
      * 查询本本部下的所有的成员

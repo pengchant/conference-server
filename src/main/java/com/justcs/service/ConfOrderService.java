@@ -90,7 +90,8 @@ public class ConfOrderService {
                     userinfoMapper.selectUsrSelect(
                             query.getSearch().getDepid(),
                             query.getSearch().getPositionid(),
-                            query.getSearch().getDutyid()
+                            query.getSearch().getDutyid(),
+                            query.getSearch().getUsrname()
                     )
             );
             return userSelectViewPageInfo;
@@ -108,7 +109,7 @@ public class ConfOrderService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<UserSelectView> queryAllUsrSelect(UserSelectView_c param) {
         if (param != null) {
-            return userinfoMapper.selectUsrSelect(param.getDepid(), param.getPositionid(), param.getDutyid());
+            return userinfoMapper.selectUsrSelect(param.getDepid(), param.getPositionid(), param.getDutyid(), param.getUsrname());
         }
         return null;
     }
@@ -174,6 +175,7 @@ public class ConfOrderService {
 
     /**
      * 修改会议室
+     *
      * @param meetingRoom
      * @return
      */
@@ -187,17 +189,17 @@ public class ConfOrderService {
 
     /**
      * 删除会议室
+     *
      * @param meetingRoom
      * @return
      */
     @Transactional
     public int removeConfRoom(MeetingRoom meetingRoom) {
-        if (meetingRoom!=null) {
+        if (meetingRoom != null) {
             return meetingRoomMapper.deleteByPrimaryKey(meetingRoom.getId());
         }
         return 0;
     }
-
 
 
     /**
@@ -205,7 +207,7 @@ public class ConfOrderService {
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public PageInfo<OrderConfView> queryOrderedConfView(PagedQueryForm<OrderedConf_c> query) {
-        if(query!=null) {
+        if (query != null) {
             // 分页查询已经预约的会议
             PageHelper.startPage(query.getPage(), query.getPagesize());
             PageInfo<OrderConfView> orderedconfview = new PageInfo<>(
@@ -227,13 +229,14 @@ public class ConfOrderService {
 
     /**
      * 查询待审核的会议
+     *
      * @param query
      * @return
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public PageInfo<OrderConfView> queryValidatingConf(PagedQueryForm<OrderedConf_c> query) {
         PageInfo<OrderConfView> result = null;
-        if(query!=null) {
+        if (query != null) {
             // 分页查询已经预约的会议
             PageHelper.startPage(query.getPage(), query.getPagesize());
             PageInfo<OrderConfView> orderedconfview = new PageInfo<>(
@@ -254,6 +257,7 @@ public class ConfOrderService {
 
     /**
      * 查询请求的会议预约信息
+     *
      * @param workerid
      * @return
      */
@@ -296,13 +300,14 @@ public class ConfOrderService {
 
     /**
      * 通过会议
+     *
      * @return
      */
     @Transactional
     public int passOrderConf(Integer confid) {
-        if(confid!=null) {
+        if (confid != null) {
             Conference conference = conferenceMapper.selectByPrimaryKey(confid);
-            if(conference!=null) {
+            if (conference != null) {
                 conference.setConfstatusid(2);
                 return conferenceMapper.updateByPrimaryKey(conference);
             }
@@ -312,13 +317,14 @@ public class ConfOrderService {
 
     /**
      * 不通过会议
+     *
      * @return
      */
     @Transactional
     public int unpassOrderConf(Integer confid) {
-        if(confid!=null) {
+        if (confid != null) {
             Conference conference = conferenceMapper.selectByPrimaryKey(confid);
-            if(conference!=null) {
+            if (conference != null) {
                 conference.setConfstatusid(101);
                 return conferenceMapper.updateByPrimaryKey(conference);
             }
@@ -329,14 +335,15 @@ public class ConfOrderService {
 
     /**
      * 结束录入会议记录
+     *
      * @param confid
      * @return
      */
     @Transactional
     public int endRecordConf(Integer confid) {
-        if(confid!=null) {
+        if (confid != null) {
             Conference conference = conferenceMapper.selectByPrimaryKey(confid);
-            if(conference!=null) {
+            if (conference != null) {
                 conference.setConfstatusid(4);
                 return conferenceMapper.updateByPrimaryKey(conference);
             }
@@ -346,12 +353,13 @@ public class ConfOrderService {
 
     /**
      * 查询用户本部门下的所有的用户
+     *
      * @param accid
      * @return
      */
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<CurDepUsrView> queryCurDepUsrViews(Integer accid) {
-        if (accid!=null) {
+        if (accid != null) {
             return userinfoMapper.selectCurDepUsr(String.valueOf(accid));
         }
         return null;
@@ -360,12 +368,13 @@ public class ConfOrderService {
 
     /**
      * 删除会议预约记录
+     *
      * @param confid
      * @return
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public int deleteOrderConference(Integer confid) {
-        if (confid !=null) {
+        if (confid != null) {
             return conferenceMapper.deleteByPrimaryKey(confid);
         }
         return 0;
@@ -374,12 +383,13 @@ public class ConfOrderService {
 
     /**
      * 标记会议正在进行中
+     *
      * @param confid
      * @return
      */
     @Transactional
     public int updateConfIn(Integer confid) {
-        if(confid!=null) {
+        if (confid != null) {
             ConferenceWithBLOBs conference = conferenceMapper.selectByPrimaryKey(confid);
             conference.setConfstatusid(3); // 设置进行中
             return conferenceMapper.updateByPrimaryKeySelective(conference);

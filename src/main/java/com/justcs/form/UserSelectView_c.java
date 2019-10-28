@@ -3,6 +3,7 @@ package com.justcs.form;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -32,6 +33,12 @@ public class UserSelectView_c {
     @NotNull
     private Integer[] dutyid;
 
+    /**
+     * 用户的姓名
+     */
+    @ApiModelProperty(value = "用户的姓名")
+    private String usrname;
+
     public Integer getDepid() {
         return depid;
     }
@@ -54,5 +61,13 @@ public class UserSelectView_c {
 
     public void setDutyid(Integer[] dutyid) {
         this.dutyid = dutyid;
+    }
+
+    public String getUsrname() {
+        return usrname;
+    }
+
+    public void setUsrname(String usrname) {
+        this.usrname = usrname;
     }
 }
