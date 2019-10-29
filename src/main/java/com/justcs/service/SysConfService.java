@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.justcs.entity.*;
 import com.justcs.form.*;
 import com.justcs.mapper.*;
+import com.justcs.view.UserSecDepView;
 import com.sun.deploy.security.DeployManifestChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.rmi.PortableRemoteObject;
+import java.util.List;
 
 /**
  * 系统配置服务
@@ -46,6 +48,7 @@ public class SysConfService {
 
     @Autowired
     private UsrsecdepMapper usrsecdepMapper;
+
 
     /**
      * 分页查询所有的学期信息
@@ -628,6 +631,7 @@ public class SysConfService {
 
     /**
      * 添加二级部门
+     *
      * @param depchildrens
      * @return
      */
@@ -637,6 +641,38 @@ public class SysConfService {
             return depchildrensMapper.insertSelective(depchildrens);
         }
         return 0;
+    }
+
+
+    /**
+     * 分页查询二级部门下的所有用户
+     *
+     * @param secdepid
+     * @return
+     */
+    public List<UserSecDepView> querySecDepUsr(String secdepid) {
+        return usrsecdepMapper.querySecDepUsrs(secdepid);
+    }
+
+    /**
+     * 删除二级用户关系
+     *
+     * @param
+     * @return
+     */
+    @Transactional
+    public boolean removeUsrSecDep(Usrsecdep usrsecdep) {
+        return usrsecdepMapper.deleteByPrimaryKey(usrsecdep.getId()) > 0;
+    }
+
+    /**
+     * 增加二级用户关系
+     *
+     * @param usrsecdep
+     * @return
+     */
+    public boolean addUsrSecDep(Usrsecdep usrsecdep) {
+        return usrsecdepMapper.insertSelective(usrsecdep) > 0;
     }
 
 

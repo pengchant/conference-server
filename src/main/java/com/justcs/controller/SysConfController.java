@@ -717,12 +717,63 @@ public class SysConfController {
         return result ? JSONResult.ok() : JSONResult.errorMsg("对不起更新二级部门失败");
     }
 
+    /**
+     * 添加二级部门
+     *
+     * @param depchildrens
+     * @return
+     */
     @PostMapping("/addsecdep")
     @ApiOperation(value = "添加二级部门")
     public JSONResult addSecdep(@RequestBody Depchildrens depchildrens) {
         boolean result = sysConfService.adddepSec(depchildrens) > 0;
         return result ? JSONResult.ok() : JSONResult.errorMsg("添加二级部门失败");
     }
+
+
+    /**
+     * 查询所有的二级部门下的所有人员
+     *
+     * @param secdepid
+     * @return
+     */
+    @PostMapping("/{secdepid}/queryUsecDep")
+    @ApiOperation(value = "查询所有二级部门")
+    public JSONResult queryUsecDep(@PathVariable(value = "secdepid") String secdepid) {
+        return JSONResult.ok(sysConfService.querySecDepUsr(secdepid));
+    }
+
+    /**
+     * 添加二级部门
+     *
+     * @param addUsrSecDep
+     * @return
+     */
+    @PostMapping("/addUsrsecDep")
+    @ApiOperation(value = "添加二级部门用户")
+    public JSONResult addUsrsecDep(@RequestBody AddUsrSecDep addUsrSecDep) {
+        Usrsecdep usrsecdep = new Usrsecdep();
+        usrsecdep.setSecdepid(Integer.valueOf(addUsrSecDep.getSecdepid()));
+        usrsecdep.setUsrid(Integer.valueOf(addUsrSecDep.getUsrid()));
+        boolean flag = sysConfService.addUsrSecDep(usrsecdep);
+        return flag ? JSONResult.ok() : JSONResult.errorMsg("添加二级部门失败");
+    }
+
+
+    /**
+     * 删除用户二级部门关系
+     * @param recorderid    关系编号
+     * @return
+     */
+    @PostMapping("/{recorderid}/removeUsrSecDep")
+    @ApiOperation(value="删除二级部门")
+    public JSONResult removeUsrSecDep(@PathVariable(value = "recorderid")String recorderid) {
+        Usrsecdep usrsecdep = new Usrsecdep();
+        usrsecdep.setId(Integer.valueOf(recorderid));
+        boolean flag = sysConfService.removeUsrSecDep(usrsecdep);
+        return flag ? JSONResult.ok() : JSONResult.errorMsg("删除二级部门失败");
+    }
+
 
 }
 
