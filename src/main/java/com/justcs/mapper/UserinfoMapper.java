@@ -37,7 +37,7 @@ public interface UserinfoMapper {
             "from userinfo u \n",
 
             // 判断条件
-            "<if test='depid !=null'>",
+            "<if test='depid !=null and depid != 0'>",
             "join (\n" +
                     "\tselect usrid\n" +
                     "\tfrom usrdep\n" +

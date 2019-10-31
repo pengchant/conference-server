@@ -32,7 +32,7 @@ public interface UsrsecdepMapper {
                     "u.usrname as usrname,\n" +
                     "d.usrid as workerid\n" +
                     "FROM `usrsecdep` d\n" +
-                    "\tleft join userinfo u on (d.usrid = u.id)\n" +
+                    "\t join userinfo u on (d.usrid = u.accid)\n" +
                     "where secdepid=#{secDepid}"
     })
     List<UserSecDepView> querySecDepUsrs(@Param("secDepid") String secDepid);

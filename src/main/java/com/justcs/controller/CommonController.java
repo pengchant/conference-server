@@ -307,7 +307,7 @@ public class CommonController {
      * 查询用户是否已在系统中注册过
      * @return
      */
-    @ApiOperation("adapterHasRegisted")
+    @ApiOperation("查询用户是否已在系统中注册过")
     @PostMapping(value = "/{workerid}/adapterHasRegisted")
     public JSONResult adapterHasRegisted(@PathVariable(value = "workerid")String workerid) {
         Account account = accountMapper.selectByAccount(workerid);
@@ -317,6 +317,17 @@ public class CommonController {
         return JSONResult.ok("0");
     }
 
+
+    /**
+     * 查询用户所在部门下的所有的子部门
+     * @param workerid
+     * @return
+     */
+    @ApiOperation("查询用户所在部门下的所有的子部门")
+    @PostMapping(value = "/{workerid}/queryAllSecDep")
+    public JSONResult queryAllSecDep(@PathVariable(value = "workerid")String workerid) {
+        return JSONResult.ok(accountMapper.queryAllSecDep(workerid));
+    }
 
 
 }

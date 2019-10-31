@@ -1,9 +1,6 @@
 package com.justcs.mapper;
 
-import com.justcs.entity.Account;
-import com.justcs.entity.Privilege;
-import com.justcs.entity.Role;
-import com.justcs.entity.Userinfo;
+import com.justcs.entity.*;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -61,4 +58,21 @@ public interface AccountMapper {
             "            join privilege p on (t.priviid = p.id)\n" +
             "        where a.id=#{usrid}")
     List<Privilege> selectPrivBysId(int usrid);
+
+
+    /**
+     * 查询用户所在部门的所有子部门
+     * @param workerid
+     * @return
+     */
+    @Select("select *\n" +
+            "from depchildrens c \n" +
+            "where c.departid in(\n" +
+            "\tselect  \n" +
+            "\td.depid\n" +
+            "\tfrom userinfo u\n" +
+            "\tleft join usrdep d on(u.id = d.usrid)\n" +
+            "\twhere accid=#{workerid} \n" +
+            ")")
+    List<Depchildrens> queryAllSecDep(String workerid);
 }
